@@ -1,0 +1,32 @@
+<div class="background">
+  <div class="hero text-primary min-h-screen">
+    <div class="hero-content flex-col lg:flex-row-reverse">
+      <div class="text-center lg:text-left">
+        <div class="card w-96 santi-glass">
+          <div class="card-body">
+            <h1 class="text-5xl font-bold">Gracias por registrarte 😍</h1>
+            <div class="formGroup" *ngIf="authService.userData as user">
+              <p class="text-center">
+                Enviamos un email de verificacion al correo:
+                <strong>{{ user.email }}</strong
+                >.
+              </p>
+              <p class="text-center">
+                Ingresa a tu casilla de correo y hace click en el link que te
+                enviamos para confirmar tu cuenta
+              </p>
+            </div>
+            <div class="form-control">
+              <button
+                class="btn btn-primary"
+                (click)="authService.sendVerificationMail()"
+              >
+                Reenviar email de verificacion
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

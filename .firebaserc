@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "races-app-534ee"
+  },
+  "targets": {
+    "races-app-534ee": {
+      "hosting": {
+        "Angular13Project": [
+          "races-app-534ee"
+        ]
+      }
+    }
+  }
+}
