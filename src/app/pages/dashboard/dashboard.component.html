@@ -43,7 +43,7 @@
               tabindex="0"
               class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4"
             >
-              <div *ngFor="let year of allRacesByYearMock; let i = index">
+              <div *ngFor="let year of allRacesByYear; let i = index">
                 <li>
                   <a (click)="scrollToYear(year.date, false)">{{
                     year.date
@@ -86,7 +86,7 @@
       </div>
       <div class="flex flex-wrap items-center" *ngIf="!loading">
         <div
-          *ngFor="let year of allRacesByYearMock; let i = index"
+          *ngFor="let year of allRacesByYear; let i = index"
           class="content-center w-full"
         >
           <div
@@ -122,7 +122,7 @@
     <ul class="menu p-4 w-80 h-full bg-base-200">
       <label class="btn btn-ghost rounded-btn">Ir al año</label>
       <!-- Sidebar content here -->
-      <div *ngFor="let year of allRacesByYearMock; let i = index">
+      <div *ngFor="let year of allRacesByYear; let i = index">
         <li>
           <a (click)="scrollToYear(year.date, false)">{{ year.date }}</a>
         </li>
