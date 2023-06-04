@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -33,7 +34,8 @@ export class EditRaceComponent implements OnInit {
     private route: ActivatedRoute,
     public fb: FormBuilder,
     public crudApi: CrudService,
-    public router: Router
+    public router: Router,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

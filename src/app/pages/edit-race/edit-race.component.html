@@ -1,114 +1,197 @@
-<div class="hero min-h-screen bg-ghost">
-  <div class="hero-content flex-col lg:flex-row-reverse">
-    <div
-      class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
-      *ngIf="isLoading"
-    >
-      <span class="loading loading-dots loading-lg"></span>
+<div class="drawer">
+  <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col">
+    <!-- Navbar -->
+    <div class="w-full navbar bg-primary">
+      <div class="flex-none lg:hidden">
+        <label
+          for="my-drawer-3"
+          class="btn btn-square btn-ghost text-primary-content"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="inline-block w-6 h-6 stroke-current"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </label>
+      </div>
+      <div class="flex-1 px-2 mx-2">
+        <a
+          class="btn btn-ghost text-primary-content normal-case text-xl"
+          [routerLink]="'/races'"
+          >Mis Carreras</a
+        >
+      </div>
+      <div class="flex-none hidden lg:block">
+        <ul class="menu menu-horizontal text-primary-content">
+          <!-- Navbar menu content here -->
+          <li>
+            <a (click)="authService.signOut()"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div
-      class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
-      *ngIf="!isLoading"
-    >
-      <form [formGroup]="raceForm">
-        <div class="card-body">
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Nombre de la carrera</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Patagonia Run"
-              [ngClass]="
-                (!raceForm.controls['name'].valid &&
-                  raceForm.controls['name'].touched) ||
-                (invalidControls.includes('name') &&
-                  !raceForm.controls['name'].touched)
-                  ? 'input input-bordered bg-white border-red-500'
-                  : 'input input-bordered bg-white'
-              "
-              formControlName="name"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Distancia</span>
-            </label>
-            <label class="input-group">
-              <input
-                type="number"
-                placeholder="42"
-                min="1"
-                [ngClass]="
-                  (!raceForm.controls['distance'].valid &&
-                    raceForm.controls['distance'].touched) ||
-                  (invalidControls.includes('distance') &&
-                    !raceForm.controls['distance'].touched)
-                    ? 'input input-bordered bg-white border-red-500'
-                    : 'input input-bordered bg-white'
-                "
-                formControlName="distance"
-              />
-              <span>Km</span>
-            </label>
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Tiempo</span>
-            </label>
-            <input
-              type="text"
-              placeholder="hh:mm:ss"
-              [ngClass]="
-                (!raceForm.controls['time'].valid &&
-                  raceForm.controls['time'].touched) ||
-                (invalidControls.includes('time') &&
-                  !raceForm.controls['time'].touched)
-                  ? 'input input-bordered bg-white border-red-500'
-                  : 'input input-bordered bg-white'
-              "
-              formControlName="time"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Fecha</span>
-            </label>
-            <input
-              type="date"
-              name="date"
-              placeholder="dd/mm/aaaa"
-              class="input input-bordered bg-white"
-              formControlName="date"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <span class="label-text">Actividad de Garmin?</span>
-              <input
-                type="checkbox"
-                class="toggle toggle-secondary"
-                (click)="toggleGarminLink($event)"
-              />
-            </label>
-            <input
-              *ngIf="garminActivity"
-              type="text"
-              placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
-              [ngClass]="
-                !raceForm.controls['garminUrl'].valid &&
-                raceForm.controls['garminUrl'].touched
-                  ? 'input input-bordered bg-white border-red-500'
-                  : 'input input-bordered bg-white'
-              "
-              formControlName="garminUrl"
-            />
-          </div>
-          <div class="form-control mt-6">
-            <button class="btn btn-primary">Crear</button>
-          </div>
+    <div class="hero min-h-screen bg-ghost">
+      <div class="hero-content flex-col lg:flex-row-reverse">
+        <div
+          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+          *ngIf="isLoading"
+        >
+          <span class="loading loading-dots loading-lg"></span>
         </div>
-      </form>
+        <div
+          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+          *ngIf="!isLoading"
+        >
+          <form [formGroup]="raceForm">
+            <div class="card-body">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Nombre de la carrera</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Patagonia Run"
+                  [ngClass]="
+                    (!raceForm.controls['name'].valid &&
+                      raceForm.controls['name'].touched) ||
+                    (invalidControls.includes('name') &&
+                      !raceForm.controls['name'].touched)
+                      ? 'input input-bordered bg-white border-red-500'
+                      : 'input input-bordered bg-white'
+                  "
+                  formControlName="name"
+                />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Distancia</span>
+                </label>
+                <label class="input-group">
+                  <input
+                    type="number"
+                    placeholder="42"
+                    min="1"
+                    [ngClass]="
+                      (!raceForm.controls['distance'].valid &&
+                        raceForm.controls['distance'].touched) ||
+                      (invalidControls.includes('distance') &&
+                        !raceForm.controls['distance'].touched)
+                        ? 'input input-bordered bg-white border-red-500'
+                        : 'input input-bordered bg-white'
+                    "
+                    formControlName="distance"
+                  />
+                  <span>Km</span>
+                </label>
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Tiempo</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="hh:mm:ss"
+                  [ngClass]="
+                    (!raceForm.controls['time'].valid &&
+                      raceForm.controls['time'].touched) ||
+                    (invalidControls.includes('time') &&
+                      !raceForm.controls['time'].touched)
+                      ? 'input input-bordered bg-white border-red-500'
+                      : 'input input-bordered bg-white'
+                  "
+                  formControlName="time"
+                />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Fecha</span>
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  placeholder="dd/mm/aaaa"
+                  class="input input-bordered bg-white"
+                  formControlName="date"
+                />
+              </div>
+              <div class="form-control">
+                <label class="label cursor-pointer">
+                  <span class="label-text">Actividad de Garmin?</span>
+                  <input
+                    type="checkbox"
+                    class="toggle toggle-secondary"
+                    (click)="toggleGarminLink($event)"
+                  />
+                </label>
+                <input
+                  *ngIf="garminActivity"
+                  type="text"
+                  placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
+                  [ngClass]="
+                    !raceForm.controls['garminUrl'].valid &&
+                    raceForm.controls['garminUrl'].touched
+                      ? 'input input-bordered bg-white border-red-500'
+                      : 'input input-bordered bg-white'
+                  "
+                  formControlName="garminUrl"
+                />
+              </div>
+              <div class="form-control mt-6">
+                <button class="btn btn-primary">Crear</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-3" class="drawer-overlay"></label>
+    <ul class="menu p-4 w-80 h-full bg-base-200">
+      <li>
+        <a (click)="authService.signOut()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+            />
+          </svg>
+          Cerrar sesion
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
