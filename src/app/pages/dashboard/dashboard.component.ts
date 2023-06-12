@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
 
   deleteRace(raceKey: string) {
     console.log(raceKey);
-    // this.crudApi.deleteRace(raceKey);
+    this.crudApi.deleteRace(raceKey);
   }
 
   scrollToYear(id: string, isMobile: boolean) {

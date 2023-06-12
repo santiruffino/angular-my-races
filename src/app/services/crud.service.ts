@@ -20,12 +20,12 @@ export class CrudService {
 
   addRace(race: Race) {
     this.racesRef = this.db.list(`${this.userUid}`);
-    this.racesRef.push({
+    return this.racesRef.push({
       name: race.name,
       date: race.date,
       time: race.time,
       distance: race.distance,
-      garminUrl: race.garminUrl,
+      garminUrl: race.garminUrl || '',
     });
   }
 

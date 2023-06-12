@@ -12,17 +12,47 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'sign-up', component: SignUpComponent },
-  { path: 'verify-email-address', component: VerifyEmailComponentComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Iniciar Sesion' },
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+    data: { title: 'Crear Cuenta' },
+  },
+  {
+    path: 'verify-email-address',
+    component: VerifyEmailComponentComponent,
+    data: { title: 'Crear Cuenta' },
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    data: { title: 'Crear Cuenta' },
+  },
   {
     path: 'forgot-password-success',
     component: ForgotPasswordSuccessComponent,
+    data: { title: 'Crear Cuenta' },
   },
-  { path: 'races', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'add-race', component: AddRaceComponent },
-  { path: 'edit-race/:key', component: EditRaceComponent },
+  {
+    path: 'races',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { title: 'Mis Carreras' },
+  },
+  {
+    path: 'add-race',
+    component: AddRaceComponent,
+    data: { title: 'Crear carrera' },
+  },
+  {
+    path: 'edit-race/:key',
+    component: EditRaceComponent,
+    data: { title: 'Editar carrera' },
+  },
 ];
 
 @NgModule({

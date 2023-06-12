@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
@@ -19,16 +20,27 @@ export class AddRaceComponent implements OnInit {
     name: ['', Validators.required],
     distance: [, Validators.required],
     date: [, Validators.required],
-    time: [, Validators.required],
+    time: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.pattern('[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?'),
+      ],
+    ],
   });
   nameInvalid: boolean = false;
   garminActivity: boolean = false;
   invalidControls: string[] = [];
+  createRaceError: boolean = false;
+  isCreatingRace: boolean = false;
+  formatedTime!: string;
 
   constructor(
     public fb: FormBuilder,
     public crudApi: CrudService,
-    public authService: AuthService
+    public authService: AuthService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +73,39 @@ export class AddRaceComponent implements OnInit {
       this.invalidControls = this.findInvalidControls();
       return;
     }
-    this.crudApi.addRace(this.raceForm.value);
-    this.resetForm();
+    try {
+      this.isCreatingRace = true;
+      this.crudApi
+        .addRace(this.raceForm.value)
+        .then((result): any => {
+          this.resetForm();
+          this.router.navigate(['races']);
+        })
+        .catch((error: any) => {
+          console.error('Error: ', error.message);
+          this.createRaceError = true;
+          this.isCreatingRace = false;
+        });
+    } catch (error: any) {
+      console.error('Error', error.message);
+      this.createRaceError = true;
+      this.isCreatingRace = false;
+    }
   }
 
   resetForm() {
     this.raceForm.reset();
+  }
+
+  hideErrorAlert() {
+    this.createRaceError = false;
+  }
+
+  formatRaceTime(value: any) {
+    const testNumber = value.target.value;
+    var foo = testNumber.split(':').join('');
+    if (foo && foo.length > 0 && foo.length <= 6) {
+      this.formatedTime = foo.match(new RegExp('.{1,2}', 'g'))!.join(':');
+    }
   }
 }
