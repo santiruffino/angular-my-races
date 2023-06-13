@@ -52,7 +52,7 @@
       <button class="btn btn-primary" [routerLink]="['/edit-race', race.$key]">
         <fa-icon [icon]="faPen"></fa-icon>
       </button>
-      <label for="my-modal" class="btn btn-error" (click)="setRaceModal(race)"
+      <label for="my-modal" class="btn btn-error" (click)="deleteRaceModal(race)"
         ><fa-icon [icon]="faTrash"></fa-icon
       ></label>
       <button *ngIf="race.garminUrl" class="btn btn-primary">

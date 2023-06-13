@@ -46,6 +46,6 @@ export class CrudService {
 
   deleteRace(id: string) {
     this.raceRef = this.db.object(`${this.userUid}/${id}`);
-    this.raceRef.remove();
+    return this.raceRef.remove();
   }
 }

@@ -13,6 +13,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Ripple, initTE } from 'tw-elements';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 
 @Component({
   selector: 'app-race-card',
@@ -29,15 +30,16 @@ export class RaceCardComponent implements OnInit {
   faTrash = faTrash;
   raceSelected!: Race;
 
-  constructor() {}
+  constructor(private analytics: AngularFireAnalytics) {}
 
   ngOnInit(): void {
     initTE({ Modal, Ripple });
     this.calculatePace(this.race.distance, this.race.time);
   }
 
-  setRaceModal(race: Race) {
+  deleteRaceModal(race: Race) {
     this.raceSelected = race;
+    this.analytics.logEvent('Race Card - Delete Race Button Click');
   }
 
   deleteRace(raceKey: string) {

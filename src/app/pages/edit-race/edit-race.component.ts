@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
 import { Race } from 'src/app/interfaces/race';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 
 @Component({
   templateUrl: './edit-race.component.html',
@@ -35,7 +36,8 @@ export class EditRaceComponent implements OnInit {
     public fb: FormBuilder,
     public crudApi: CrudService,
     public router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    private analytics: AngularFireAnalytics
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +52,6 @@ export class EditRaceComponent implements OnInit {
   }
 
   fillRaceForm(raceInfo: Race) {
-    // LA DATA ESTA MOCKEADA!!!!
     this.raceForm.controls['key'].setValue(this.raceKey);
     this.raceForm.controls['name'].setValue(raceInfo.name);
     this.raceForm.controls['distance'].setValue(raceInfo.distance);
@@ -83,6 +84,12 @@ export class EditRaceComponent implements OnInit {
   }
 
   saveRaceChanges() {
+    this.analytics.logEvent('Edit Race - Edit Race Button Click');
+    if (!this.raceForm.valid) {
+      this.analytics.logEvent('Edit Race - Edit Race Error - Form Invalid');
+      this.invalidControls = this.findInvalidControls();
+      return;
+    }
     const newData = {
       name: this.raceForm.controls['name'].value,
       distance: this.raceForm.controls['distance'].value,
@@ -92,12 +99,17 @@ export class EditRaceComponent implements OnInit {
     };
 
     if (this.raceKey) {
+      this.analytics.logEvent('Edit Race - Edit Race Start');
       this.crudApi
         .updateRace(this.raceKey, newData)
         .then(() => {
+          this.analytics.logEvent('Edit Race - Edit Race Success');
           this.router.navigate(['races']);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.analytics.logEvent('Edit Race - Edit Race Error');
+          console.log(err);
+        });
     }
   }
 }

@@ -3,6 +3,8 @@ import { Login } from 'src/app/interfaces/login';
 import { Race } from 'src/app/interfaces/race';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -29,7 +31,12 @@ export class DashboardComponent implements OnInit {
   allRacesByYearMock: any;
   creatingNewRace: boolean = false;
 
-  constructor(public crudApi: CrudService, public authService: AuthService) {}
+  constructor(
+    public crudApi: CrudService,
+    public authService: AuthService,
+    private analytics: AngularFireAnalytics,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.userData = this.authService.userData;
@@ -49,15 +56,32 @@ export class DashboardComponent implements OnInit {
   }
 
   addRace() {
+    this.analytics.logEvent('Dashboard - Add Race Button Click');
+    this.router.navigate(['add-race']);
     this.creatingNewRace = true;
   }
 
   deleteRace(raceKey: string) {
-    console.log(raceKey);
+    this.analytics.logEvent('Dashboard - Delete Race Start');
     this.crudApi.deleteRace(raceKey);
+    try {
+      this.crudApi
+        .deleteRace(raceKey)
+        .then((result): any => {
+          this.analytics.logEvent('Dashboard - Delete Race Success');
+        })
+        .catch((error: any) => {
+          console.error('Error: ', error.message);
+          this.analytics.logEvent('Dashboard - Delete Race Error');
+        });
+    } catch (error: any) {
+      console.error('Error', error.message);
+      this.analytics.logEvent('Dashboard - Delete Race Error');
+    }
   }
 
   scrollToYear(id: string, isMobile: boolean) {
+    this.analytics.logEvent('Dashboard - Go to year Click');
     const el: HTMLElement | null = document.getElementById(id);
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const checkbox: HTMLElement | null = document.getElementById('my-drawer-3');
@@ -439,5 +463,10 @@ export class DashboardComponent implements OnInit {
         $key: '-NN-6ZuxhRJ3kXBlwqIk',
       },
     ];
+  }
+
+  logout() {
+    this.analytics.logEvent('Dashboard - Logout Button Click');
+    this.authService.signOut();
   }
 }

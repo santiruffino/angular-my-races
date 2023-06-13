@@ -53,7 +53,7 @@
             </ul>
           </div>
           <li>
-            <a (click)="authService.signOut()"
+            <a (click)="logout()"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -104,7 +104,7 @@
           </div>
         </div>
         <label
-          [routerLink]="'/add-race'"
+          (click)="addRace()"
           class="btn fixed z-90 bottom-10 right-8 w-20 h-20 drop-shadow-lg flex justify-center items-center text-4xl btn-primary hover:drop-shadow-2xl hover:animate-bounce duration-300"
           >&#43;</label
         >
@@ -122,7 +122,7 @@
         </li>
       </div>
       <li>
-        <a (click)="authService.signOut()">
+        <a (click)="logout()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

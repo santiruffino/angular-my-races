@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import {
   FormBuilder,
   FormControl,
@@ -40,7 +41,8 @@ export class AddRaceComponent implements OnInit {
     public fb: FormBuilder,
     public crudApi: CrudService,
     public authService: AuthService,
-    public router: Router
+    public router: Router,
+    private analytics: AngularFireAnalytics
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class AddRaceComponent implements OnInit {
 
   toggleGarminLink(event: any) {
     this.garminActivity = event.target.checked;
+    this.analytics.logEvent('Add Race - Garmin Toggle');
     this.garminActivity
       ? this.raceForm.addControl(
           'garminUrl',
@@ -69,25 +72,31 @@ export class AddRaceComponent implements OnInit {
   }
 
   addRace() {
+    this.analytics.logEvent('Add Race - Create Race Button Click');
     if (!this.raceForm.valid) {
+      this.analytics.logEvent('Add Race - Create Race Error - Form Invalid');
       this.invalidControls = this.findInvalidControls();
       return;
     }
     try {
       this.isCreatingRace = true;
+      this.analytics.logEvent('Add Race- Create Race Start');
       this.crudApi
         .addRace(this.raceForm.value)
         .then((result): any => {
+          this.analytics.logEvent('Add Race - Create Race Success');
           this.resetForm();
           this.router.navigate(['races']);
         })
         .catch((error: any) => {
           console.error('Error: ', error.message);
+          this.analytics.logEvent('Add Race - Create Race Error');
           this.createRaceError = true;
           this.isCreatingRace = false;
         });
     } catch (error: any) {
       console.error('Error', error.message);
+      this.analytics.logEvent('Add Race - Create Race Error');
       this.createRaceError = true;
       this.isCreatingRace = false;
     }
