@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,7 +14,11 @@ export class LoginComponent implements OnInit {
   });
   invalidControls: string[] = [];
 
-  constructor(public authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    public authService: AuthService,
+    private fb: FormBuilder,
+    private analytics: AngularFireAnalytics
+  ) {}
 
   ngOnInit(): void {}
 
@@ -29,10 +34,13 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.analytics.logEvent('Login - Login Button Click');
     if (!this.loginForm.valid) {
       this.invalidControls = this.findInvalidControls();
+      this.analytics.logEvent('Login - Login Error - Form Invalid');
       return;
     }
+    this.analytics.logEvent('Login - Login Error Sucess');
     this.authService.signIn(
       this.loginForm.controls['email'].value,
       this.loginForm.controls['password'].value

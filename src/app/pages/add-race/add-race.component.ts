@@ -7,6 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import {
+  faBars,
+  faCircleExclamation,
+  faHouse,
+  faRightFromBracket,
+} from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
@@ -36,6 +42,10 @@ export class AddRaceComponent implements OnInit {
   createRaceError: boolean = false;
   isCreatingRace: boolean = false;
   formatedTime!: string;
+  faRightFromBracket = faRightFromBracket;
+  faHouse = faHouse;
+  faCircleExclamation = faCircleExclamation;
+  faBars = faBars;
 
   constructor(
     public fb: FormBuilder,
@@ -51,7 +61,9 @@ export class AddRaceComponent implements OnInit {
 
   toggleGarminLink(event: any) {
     this.garminActivity = event.target.checked;
-    this.analytics.logEvent('Add Race - Garmin Toggle');
+    this.analytics.logEvent(
+      `Add Race - Garmin Toggle - ${this.garminActivity}`
+    );
     this.garminActivity
       ? this.raceForm.addControl(
           'garminUrl',

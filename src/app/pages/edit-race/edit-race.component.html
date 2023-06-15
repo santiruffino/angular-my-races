@@ -1,26 +1,13 @@
 <div class="drawer">
   <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
-    <!-- Navbar -->
     <div class="w-full navbar bg-primary">
       <div class="flex-none lg:hidden">
         <label
           for="my-drawer-3"
           class="btn btn-square btn-ghost text-primary-content"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="inline-block w-6 h-6 stroke-current"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
+          <fa-icon [icon]="faBars" class="fa-xl"></fa-icon>
         </label>
       </div>
       <div class="flex-1 px-2 mx-2">
@@ -35,20 +22,7 @@
           <!-- Navbar menu content here -->
           <li>
             <a (click)="authService.signOut()"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                />
-              </svg>
+              ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
             </a>
           </li>
         </ul>
@@ -56,16 +30,7 @@
     </div>
     <div class="hero min-h-screen bg-ghost">
       <div class="hero-content flex-col lg:flex-row-reverse">
-        <div
-          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
-          *ngIf="isLoading"
-        >
-          <span class="loading loading-dots loading-lg"></span>
-        </div>
-        <div
-          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
-          *ngIf="!isLoading"
-        >
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form [formGroup]="raceForm">
             <div class="card-body">
               <div class="form-control">
@@ -73,6 +38,7 @@
                   <span class="label-text">Nombre de la carrera</span>
                 </label>
                 <input
+                  required
                   type="text"
                   placeholder="Patagonia Run"
                   [ngClass]="
@@ -124,6 +90,9 @@
                       : 'input input-bordered bg-white'
                   "
                   formControlName="time"
+                  (keyup)="formatRaceTime($event)"
+                  value="{{ formatedTime }}"
+                  maxlength="8"
                 />
               </div>
               <div class="form-control">
@@ -136,6 +105,14 @@
                   placeholder="dd/mm/aaaa"
                   class="input input-bordered bg-white"
                   formControlName="date"
+                  [ngClass]="
+                    (!raceForm.controls['date'].valid &&
+                      raceForm.controls['date'].touched) ||
+                    (invalidControls.includes('date') &&
+                      !raceForm.controls['date'].touched)
+                      ? 'input input-bordered bg-white border-red-500'
+                      : 'input input-bordered bg-white'
+                  "
                 />
               </div>
               <div class="form-control">
@@ -152,8 +129,10 @@
                   type="text"
                   placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
                   [ngClass]="
-                    !raceForm.controls['garminUrl'].valid &&
-                    raceForm.controls['garminUrl'].touched
+                    (!raceForm.controls['garminUrl'].valid &&
+                      raceForm.controls['garminUrl'].touched) ||
+                    (invalidControls.includes('garminUrl') &&
+                      !raceForm.controls['garminUrl'].touched)
                       ? 'input input-bordered bg-white border-red-500'
                       : 'input input-bordered bg-white'
                   "
@@ -161,34 +140,48 @@
                 />
               </div>
               <div class="form-control mt-6">
-                <button class="btn btn-primary">Crear</button>
+                <button
+                  class="btn btn-primary"
+                  (click)="saveRaceChanges()"
+                  *ngIf="!isCreatingRace"
+                >
+                  Guardar
+                </button>
+                <button class="btn btn-primary" *ngIf="isCreatingRace">
+                  <span class="loading loading-spinner"></span>
+                  Guardando
+                </button>
+              </div>
+              <div class="alert alert-error" *ngIf="editRaceError">
+                <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
+                <span>Error! No pudimos editar la carrera 😭</span>
+                <div>
+                  <button
+                    class="btn btn-sm btn-ghost"
+                    (click)="hideErrorAlert()"
+                  >
+                    X
+                  </button>
+                </div>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
-
   </div>
   <div class="drawer-side">
     <label for="my-drawer-3" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200">
       <li>
+        <a [routerLink]="'/races'">
+          <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>Ir al inicio</a
+        >
+      </li>
+      <div class="divider"></div>
+      <li>
         <a (click)="authService.signOut()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-            />
-          </svg>
+          <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
           Cerrar sesion
         </a>
       </li>

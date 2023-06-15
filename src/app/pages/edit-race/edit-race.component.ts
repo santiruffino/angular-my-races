@@ -11,6 +11,12 @@ import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
 import { Race } from 'src/app/interfaces/race';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import {
+  faBars,
+  faCircleExclamation,
+  faHouse,
+  faRightFromBracket,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './edit-race.component.html',
@@ -30,6 +36,13 @@ export class EditRaceComponent implements OnInit {
   races: any;
   raceKey: string = this.route.snapshot.paramMap.get('key') || '';
   isLoading: boolean = true;
+  faBars = faBars;
+  faHouse = faHouse;
+  faRightFromBracket = faRightFromBracket;
+  faCircleExclamation = faCircleExclamation;
+  formatedTime!: string;
+  isCreatingRace: boolean = false;
+  editRaceError: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,12 +88,27 @@ export class EditRaceComponent implements OnInit {
 
   toggleGarminLink(event: any) {
     this.garminActivity = event.target.checked;
+    this.analytics.logEvent(
+      `Add Race - Garmin Toggle - ${this.garminActivity}`
+    );
     this.garminActivity
       ? this.raceForm.addControl(
           'garminUrl',
           new FormControl('', Validators.required)
         )
       : this.raceForm.removeControl('garminUrl');
+  }
+
+  formatRaceTime(value: any) {
+    const testNumber = value.target.value;
+    var foo = testNumber.split(':').join('');
+    if (foo && foo.length > 0 && foo.length <= 6) {
+      this.formatedTime = foo.match(new RegExp('.{1,2}', 'g'))!.join(':');
+    }
+  }
+
+  hideErrorAlert() {
+    this.editRaceError = false;
   }
 
   saveRaceChanges() {
@@ -108,7 +136,7 @@ export class EditRaceComponent implements OnInit {
         })
         .catch((err) => {
           this.analytics.logEvent('Edit Race - Edit Race Error');
-          console.log(err);
+          console.error(err);
         });
     }
   }

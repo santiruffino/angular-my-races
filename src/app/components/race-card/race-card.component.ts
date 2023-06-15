@@ -37,6 +37,10 @@ export class RaceCardComponent implements OnInit {
     this.calculatePace(this.race.distance, this.race.time);
   }
 
+  cancelDeleteRace() {
+    this.analytics.logEvent('Race Card - Cancel Delete Race Button Click');
+  }
+
   deleteRaceModal(race: Race) {
     this.raceSelected = race;
     this.analytics.logEvent('Race Card - Delete Race Button Click');

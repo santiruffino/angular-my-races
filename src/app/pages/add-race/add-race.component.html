@@ -1,26 +1,13 @@
 <div class="drawer">
   <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
-    <!-- Navbar -->
     <div class="w-full navbar bg-primary">
       <div class="flex-none lg:hidden">
         <label
           for="my-drawer-3"
           class="btn btn-square btn-ghost text-primary-content"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="inline-block w-6 h-6 stroke-current"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
+          <fa-icon [icon]="faBars" class="fa-xl"></fa-icon>
         </label>
       </div>
       <div class="flex-1 px-2 mx-2">
@@ -35,20 +22,7 @@
           <!-- Navbar menu content here -->
           <li>
             <a (click)="authService.signOut()"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-                />
-              </svg>
+              ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
             </a>
           </li>
         </ul>
@@ -179,19 +153,7 @@
                 </button>
               </div>
               <div class="alert alert-error" *ngIf="createRaceError">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="stroke-current shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
                 <span>Error! No pudimos crear la carrera 😭</span>
                 <div>
                   <button
@@ -212,21 +174,14 @@
     <label for="my-drawer-3" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200">
       <li>
+        <a [routerLink]="'/races'">
+          <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>Ir al inicio</a
+        >
+      </li>
+      <div class="divider"></div>
+      <li>
         <a (click)="authService.signOut()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-            />
-          </svg>
+          <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
           Cerrar sesion
         </a>
       </li>

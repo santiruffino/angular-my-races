@@ -1,3 +1,4 @@
+import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,7 +14,11 @@ export class SignUpComponent implements OnInit {
   });
   invalidControls: string[] = [];
 
-  constructor(public authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    public authService: AuthService,
+    private fb: FormBuilder,
+    private analytics: AngularFireAnalytics
+  ) {}
 
   ngOnInit(): void {}
 
@@ -29,10 +34,13 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
+    this.analytics.logEvent('Sign Up - Sign Up Button Click');
     if (!this.signUpForm.valid) {
+      this.analytics.logEvent('Sign Up - Sign Up - Form Invalid');
       this.invalidControls = this.findInvalidControls();
       return;
     }
+    this.analytics.logEvent('Sign Up - Sign Up Success');
     this.authService.signUp(
       this.signUpForm.controls['email'].value,
       this.signUpForm.controls['password'].value
