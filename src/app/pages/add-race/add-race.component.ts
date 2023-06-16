@@ -25,7 +25,8 @@ import { Datepicker, Input, initTE } from 'tw-elements';
 export class AddRaceComponent implements OnInit {
   public raceForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    distance: [, Validators.required],
+    distanceValue: [, Validators.required],
+    distanceUnit: ['Km', Validators.required],
     date: [, Validators.required],
     time: [
       '',

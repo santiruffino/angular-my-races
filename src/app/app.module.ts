@@ -24,7 +24,6 @@ import { AddRaceComponent } from './pages/add-race/add-race.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { VerifyEmailComponentComponent } from './pages/verify-email-component/verify-email-component.component';
-import { AddRaceCardComponent } from './components/add-race-card/add-race-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditRaceComponent } from './pages/edit-race/edit-race.component';
 import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/forgot-password-success.component';
@@ -39,7 +38,6 @@ import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponentComponent,
-    AddRaceCardComponent,
     EditRaceComponent,
     ForgotPasswordSuccessComponent,
   ],

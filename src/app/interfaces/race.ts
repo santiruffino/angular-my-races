@@ -1,7 +1,8 @@
 export interface Race {
   $key: string;
   name: string;
-  distance: number;
+  distanceValue: number;
+  distanceUnit: string;
   date: Date;
   time: string;
   type: string;

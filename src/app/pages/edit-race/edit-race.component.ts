@@ -27,7 +27,8 @@ export class EditRaceComponent implements OnInit {
   public raceForm: FormGroup = this.fb.group({
     key: [],
     name: ['', Validators.required],
-    distance: [, Validators.required],
+    distanceValue: [, Validators.required],
+    distanceUnit: ['Km', Validators.required],
     date: [, Validators.required],
     time: [, Validators.required],
   });
@@ -67,7 +68,8 @@ export class EditRaceComponent implements OnInit {
   fillRaceForm(raceInfo: Race) {
     this.raceForm.controls['key'].setValue(this.raceKey);
     this.raceForm.controls['name'].setValue(raceInfo.name);
-    this.raceForm.controls['distance'].setValue(raceInfo.distance);
+    this.raceForm.controls['distanceValue'].setValue(raceInfo.distanceValue);
+    this.raceForm.controls['distanceUnit'].setValue(raceInfo.distanceUnit);
     this.raceForm.controls['date'].setValue(raceInfo.date);
     this.raceForm.controls['time'].setValue(raceInfo.time);
     if (raceInfo.garminUrl) {
@@ -120,7 +122,8 @@ export class EditRaceComponent implements OnInit {
     }
     const newData = {
       name: this.raceForm.controls['name'].value,
-      distance: this.raceForm.controls['distance'].value,
+      distanceValue: this.raceForm.controls['distanceValue'].value,
+      distanceUnit: this.raceForm.controls['distanceUnit'].value,
       time: this.raceForm.controls['time'].value,
       date: this.raceForm.controls['date'].value,
       garminUrl: this.raceForm.controls['garminUrl'].value || '',

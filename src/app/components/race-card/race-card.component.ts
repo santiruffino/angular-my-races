@@ -34,7 +34,7 @@ export class RaceCardComponent implements OnInit {
 
   ngOnInit(): void {
     initTE({ Modal, Ripple });
-    this.calculatePace(this.race.distance, this.race.time);
+    this.calculatePace(this.race.distanceValue, this.race.time);
   }
 
   cancelDeleteRace() {

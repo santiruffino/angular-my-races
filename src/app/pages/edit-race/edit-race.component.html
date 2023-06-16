@@ -62,16 +62,19 @@
                     placeholder="42"
                     min="1"
                     [ngClass]="
-                      (!raceForm.controls['distance'].valid &&
-                        raceForm.controls['distance'].touched) ||
-                      (invalidControls.includes('distance') &&
-                        !raceForm.controls['distance'].touched)
+                      (!raceForm.controls['distanceValue'].valid &&
+                        raceForm.controls['distanceValue'].touched) ||
+                      (invalidControls.includes('distanceValue') &&
+                        !raceForm.controls['distanceValue'].touched)
                         ? 'input input-bordered bg-white border-red-500'
                         : 'input input-bordered bg-white'
                     "
-                    formControlName="distance"
+                    formControlName="distanceValue"
                   />
-                  <span>Km</span>
+                  <select class="select select-bordered" formControlName="distanceUnit">
+                    <option selected>Km</option>
+                    <option>Mi</option>
+                  </select>
                 </label>
               </div>
               <div class="form-control">

@@ -24,7 +24,8 @@ export class CrudService {
       name: race.name,
       date: race.date,
       time: race.time,
-      distance: race.distance,
+      distanceValue: race.distanceValue,
+      distanceUnit: race.distanceUnit,
       garminUrl: race.garminUrl || '',
     });
   }

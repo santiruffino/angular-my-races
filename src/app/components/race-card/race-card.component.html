@@ -8,7 +8,9 @@
       >?
     </p>
     <div class="modal-action">
-      <label for="my-modal" class="btn btn-outline" (click)="cancelDeleteRace()">Cancelar</label>
+      <label for="my-modal" class="btn btn-outline" (click)="cancelDeleteRace()"
+        >Cancelar</label
+      >
       <label
         for="my-modal"
         class="btn btn-error"
@@ -31,7 +33,7 @@
       <div class="stat px-5">
         <div class="stat-title">Distancia</div>
         <div class="stat-value text-xl text-info-content">
-          {{ race.distance }}Km
+          {{ race.distanceValue }}{{ race.distanceUnit }}
         </div>
       </div>
 
@@ -43,7 +45,7 @@
       <div class="stat px-5">
         <div class="stat-title">Ritmo</div>
         <div class="stat-value text-xl text-info-content">
-          {{ race.pace }}/km
+          {{ race.pace }}/ {{ race.distanceUnit }}
         </div>
       </div>
     </div>
@@ -51,11 +53,14 @@
       <button class="btn btn-primary" [routerLink]="['/edit-race', race.$key]">
         <fa-icon [icon]="faPen"></fa-icon>
       </button>
-      <label for="my-modal" class="btn btn-error" (click)="deleteRaceModal(race)"
+      <label
+        for="my-modal"
+        class="btn btn-error"
+        (click)="deleteRaceModal(race)"
         ><fa-icon [icon]="faTrash"></fa-icon
       ></label>
       <button *ngIf="race.garminUrl" class="btn btn-primary">
-        Garmin
+        <a href="{{ race.garminUrl }}" target="_blank"> Garmin </a>
         <fa-icon class="pl-2" [icon]="faExternalLinkAlt"></fa-icon>
       </button>
     </div>
