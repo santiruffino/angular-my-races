@@ -7,5 +7,5 @@ export interface Race {
   time: string;
   type: string;
   pace: string;
-  garminUrl?: string;
+  externalActivityUrl?: string;
 }

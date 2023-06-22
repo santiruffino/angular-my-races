@@ -1,19 +1,33 @@
-import { map } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  fromEvent,
+  map,
+  switchMap,
+} from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from 'src/app/interfaces/login';
 import { Race } from 'src/app/interfaces/race';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import { Router } from '@angular/router';
-import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faMagnifyingGlass,
+  faRightFromBracket,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('input', { static: true }) input!: ElementRef;
+
   allRaces: Race[] = [];
+  originalAllRaces: Race[] = [];
   hideWhenNoRace: boolean = false;
   noData: boolean = false;
   preLoader: boolean = true;
@@ -35,6 +49,10 @@ export class DashboardComponent implements OnInit {
   yearsArray: number[] = [];
   faRightFromBracket = faRightFromBracket;
   faBars = faBars;
+  faMagnifyingGlass = faMagnifyingGlass;
+  filteredRaces!: Race[];
+  searchSubscription: any;
+  searchSubject: any;
 
   constructor(
     public crudApi: CrudService,
@@ -53,6 +71,7 @@ export class DashboardComponent implements OnInit {
         let a: any = item.payload.toJSON();
         a['$key'] = item.key;
         this.allRaces.push(a as Race);
+        this.originalAllRaces.push(a as Race);
       });
       this.groupRacesByYear();
       this.orderRaces();
@@ -143,13 +162,33 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  scrollToYear(id: number) {
+  searchRace(data: string, isMobile: boolean) {
+    this.analytics.logEvent('Dashboard - Search race Button Click');
+    if (isMobile) this.hideDrawerMobile();
+    if (!data) {
+      this.analytics.logEvent('Dashboard - Search race empty');
+      this.filteredRaces = this.originalAllRaces;
+    } else {
+      this.analytics.logEvent('Dashboard - Search race with value');
+      this.filteredRaces = this.allRaces.filter((race) =>
+        race?.name.toLowerCase().includes(data.toLowerCase())
+      );
+    }
+    this.allRaces = this.filteredRaces;
+    this.groupRacesByYear();
+    this.orderRaces();
+  }
+
+  scrollToYear(id: number, isMobile: boolean) {
     this.analytics.logEvent('Dashboard - Go to year Click');
     const el: HTMLElement | null = document.getElementById(id.toString());
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (isMobile) this.hideDrawerMobile();
+  }
+
+  hideDrawerMobile() {
     const checkbox: HTMLElement | null = document.getElementById('my-drawer-3');
-    const documentHtml = document.getElementById('dashboard');
-    documentHtml?.blur();
+    checkbox?.click();
   }
 
   logout() {

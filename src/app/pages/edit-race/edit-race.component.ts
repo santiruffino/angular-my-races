@@ -33,7 +33,7 @@ export class EditRaceComponent implements OnInit {
     time: [, Validators.required],
   });
   invalidControls: string[] = [];
-  garminActivity!: boolean;
+  externalActivity!: boolean;
   races: any;
   raceKey: string = this.route.snapshot.paramMap.get('key') || '';
   isLoading: boolean = true;
@@ -72,8 +72,8 @@ export class EditRaceComponent implements OnInit {
     this.raceForm.controls['distanceUnit'].setValue(raceInfo.distanceUnit);
     this.raceForm.controls['date'].setValue(raceInfo.date);
     this.raceForm.controls['time'].setValue(raceInfo.time);
-    if (raceInfo.garminUrl) {
-      this.raceForm.controls['garminUrl'].setValue(raceInfo.garminUrl);
+    if (raceInfo.externalActivityUrl) {
+      this.raceForm.controls['externalActivityUrl'].setValue(raceInfo.externalActivityUrl);
     }
   }
 
@@ -88,17 +88,17 @@ export class EditRaceComponent implements OnInit {
     return invalid;
   }
 
-  toggleGarminLink(event: any) {
-    this.garminActivity = event.target.checked;
+  toggleExternalActivityLink(event: any) {
+    this.externalActivity = event.target.checked;
     this.analytics.logEvent(
-      `Add Race - Garmin Toggle - ${this.garminActivity}`
+      `Add Race - External Activity Toggle - ${this.externalActivity}`
     );
-    this.garminActivity
+    this.externalActivity
       ? this.raceForm.addControl(
-          'garminUrl',
+          'externalActivityUrl',
           new FormControl('', Validators.required)
         )
-      : this.raceForm.removeControl('garminUrl');
+      : this.raceForm.removeControl('externalActivityUrl');
   }
 
   formatRaceTime(value: any) {
@@ -126,7 +126,7 @@ export class EditRaceComponent implements OnInit {
       distanceUnit: this.raceForm.controls['distanceUnit'].value,
       time: this.raceForm.controls['time'].value,
       date: this.raceForm.controls['date'].value,
-      garminUrl: this.raceForm.controls['garminUrl'].value || '',
+      externalActivityUrl: this.raceForm.controls['externalActivityUrl'].value || '',
     };
 
     if (this.raceKey) {

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import {
   faBars,
   faCircleExclamation,
+  faCircleInfo,
   faHouse,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +39,7 @@ export class AddRaceComponent implements OnInit {
     ],
   });
   nameInvalid: boolean = false;
-  garminActivity: boolean = false;
+  externalActivity: boolean = false;
   invalidControls: string[] = [];
   createRaceError: boolean = false;
   isCreatingRace: boolean = false;
@@ -47,6 +48,7 @@ export class AddRaceComponent implements OnInit {
   faHouse = faHouse;
   faCircleExclamation = faCircleExclamation;
   faBars = faBars;
+  faCircleInfo = faCircleInfo;
 
   constructor(
     public fb: FormBuilder,
@@ -60,17 +62,17 @@ export class AddRaceComponent implements OnInit {
     initTE({ Datepicker, Input });
   }
 
-  toggleGarminLink(event: any) {
-    this.garminActivity = event.target.checked;
+  toggleExternalActivityLink(event: any) {
+    this.externalActivity = event.target.checked;
     this.analytics.logEvent(
-      `Add Race - Garmin Toggle - ${this.garminActivity}`
+      `Add Race - External Activity Toggle - ${this.externalActivity}`
     );
-    this.garminActivity
+    this.externalActivity
       ? this.raceForm.addControl(
-          'garminUrl',
+          'externalActivityUrl',
           new FormControl('', Validators.required)
         )
-      : this.raceForm.removeControl('garminUrl');
+      : this.raceForm.removeControl('externalActivityUrl');
   }
 
   public findInvalidControls() {

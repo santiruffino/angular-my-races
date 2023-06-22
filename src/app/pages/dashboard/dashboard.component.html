@@ -20,26 +20,43 @@
       </div>
       <div class="flex-none hidden lg:block">
         <ul
-      class="menu menu-horizontal dropdown-content p-2 shadow rounded-box text-primary-content"
-    >
-      <li tabindex="0">
-        <details>
-          <summary class="font-bold text-base">Ir al año</summary>
-          <ul class="p-2 full-width">
-            <div *ngFor="let year of yearsArray">
-              <li class="text-primary">
-                <a (click)="scrollToYear(year)">{{ year }}</a>
-              </li>
+          class="menu menu-horizontal dropdown-content p-2 shadow rounded-box text-primary-content"
+        >
+          <div class="flex-none gap-2">
+            <div class="form-control">
+              <div class="join">
+                <input
+                  class="input join-item text-primary"
+                  placeholder="Buscar Carrera"
+                  #filter
+                />
+                <button
+                  class="btn join-item"
+                  (click)="searchRace(filter.value, false)"
+                >
+                  <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+                </button>
+              </div>
             </div>
-          </ul>
-        </details>
-      </li>
-      <li class="text-primary-content self-center">
-        <a (click)="logout()"
-          ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
-        </a>
-      </li>
-    </ul>
+          </div>
+          <li tabindex="0">
+            <details class="w-100">
+              <summary class="font-bold text-base w-100">Ir al año</summary>
+              <ul class="p-2 full-width">
+                <div *ngFor="let year of yearsArray">
+                  <li class="text-primary">
+                    <a (click)="scrollToYear(year, false)">{{ year }}</a>
+                  </li>
+                </div>
+              </ul>
+            </details>
+          </li>
+          <li class="text-primary-content self-center">
+            <a (click)="logout()"
+              ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="min-h-screen">
@@ -85,11 +102,28 @@
   <div class="drawer-side">
     <label for="my-drawer-3" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200">
+      <div class="flex-none gap-2">
+        <div class="form-control">
+          <div class="join">
+            <input
+              class="input input-bordered join-item text-primary"
+              placeholder="Buscar Carrera"
+              #filterMobile
+            />
+            <button
+              class="btn btn-primary join-item"
+              (click)="searchRace(filterMobile.value, true)"
+            >
+              <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
       <label class="btn btn-ghost btn-disabled">Ir al año</label>
       <!-- Sidebar content here -->
       <div *ngFor="let year of allRacesByYear; let i = index">
         <li>
-          <a (click)="scrollToYear(year.date)">{{ year.date }}</a>
+          <a (click)="scrollToYear(year.date, true)">{{ year.date }}</a>
         </li>
       </div>
       <div class="divider"></div>

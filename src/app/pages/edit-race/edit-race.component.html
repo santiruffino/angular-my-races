@@ -120,26 +120,26 @@
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
-                  <span class="label-text">Actividad de Garmin?</span>
+                  <span class="label-text">Actividad de otra app?</span>
                   <input
                     type="checkbox"
                     class="toggle toggle-secondary"
-                    (click)="toggleGarminLink($event)"
+                    (click)="toggleExternalActivityLink($event)"
                   />
                 </label>
                 <input
-                  *ngIf="garminActivity"
+                  *ngIf="externalActivity"
                   type="text"
                   placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
                   [ngClass]="
-                    (!raceForm.controls['garminUrl'].valid &&
-                      raceForm.controls['garminUrl'].touched) ||
-                    (invalidControls.includes('garminUrl') &&
-                      !raceForm.controls['garminUrl'].touched)
+                    (!raceForm.controls['externalActivityUrl'].valid &&
+                      raceForm.controls['externalActivityUrl'].touched) ||
+                    (invalidControls.includes('externalActivityUrl') &&
+                      !raceForm.controls['externalActivityUrl'].touched)
                       ? 'input input-bordered bg-white border-red-500'
                       : 'input input-bordered bg-white'
                   "
-                  formControlName="garminUrl"
+                  formControlName="externalActivityUrl"
                 />
               </div>
               <div class="form-control mt-6">

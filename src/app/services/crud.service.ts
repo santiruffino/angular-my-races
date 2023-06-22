@@ -26,7 +26,7 @@ export class CrudService {
       time: race.time,
       distanceValue: race.distanceValue,
       distanceUnit: race.distanceUnit,
-      garminUrl: race.garminUrl || '',
+      externalActivityUrl: race.externalActivityUrl || '',
     });
   }
 
