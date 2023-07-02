@@ -22,7 +22,7 @@
         <ul
           class="menu menu-horizontal dropdown-content p-2 shadow rounded-box text-primary-content"
         >
-          <div class="flex-none gap-2">
+          <div class="flex-none gap-2" *ngIf="!noData">
             <div class="form-control">
               <div class="join">
                 <input
@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <li tabindex="0">
+          <li tabindex="0" *ngIf="!noData">
             <details class="w-100">
               <summary class="font-bold text-base w-100">Ir al año</summary>
               <ul class="p-2 full-width">
@@ -65,6 +65,19 @@
         <span class="loading loading-ball loading-lg text-3xl"></span>
         <span class="loading loading-ball loading-lg text-3xl"></span>
         <span class="loading loading-ball loading-lg text-3xl"></span>
+      </div>
+      <div
+        class="flex justify-center items-center text-center pt-12"
+        *ngIf="noData && !loading"
+      >
+        <div class="card w-96 santi-glass">
+          <div class="card-body">
+            <h1 class="text-5xl font-bold pb-5">No hay carreras cargadas 🥺</h1>
+            <button class="btn btn-primary" (click)="addRace()">
+              Crear Carrera
+            </button>
+          </div>
+        </div>
       </div>
       <div class="flex flex-wrap items-center" *ngIf="!loading">
         <div
@@ -92,6 +105,7 @@
           </div>
         </div>
         <label
+          *ngIf="!noData"
           (click)="addRace()"
           class="btn fixed z-90 bottom-10 right-8 w-20 h-20 drop-shadow-lg flex justify-center items-center text-4xl btn-primary hover:drop-shadow-2xl hover:animate-bounce duration-300"
           >&#43;</label
@@ -102,7 +116,7 @@
   <div class="drawer-side">
     <label for="my-drawer-3" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200">
-      <div class="flex-none gap-2">
+      <div class="flex-none gap-2" *ngIf="!noData">
         <div class="form-control">
           <div class="join">
             <input
@@ -119,7 +133,7 @@
           </div>
         </div>
       </div>
-      <label class="btn btn-ghost btn-disabled">Ir al año</label>
+      <label class="btn btn-ghost btn-disabled" *ngIf="!noData">Ir al año</label>
       <!-- Sidebar content here -->
       <div *ngFor="let year of allRacesByYear; let i = index">
         <li>

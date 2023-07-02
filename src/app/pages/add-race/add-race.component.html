@@ -21,6 +21,11 @@
         <ul class="menu menu-horizontal text-primary-content">
           <!-- Navbar menu content here -->
           <li>
+            <a [routerLink]="'/races'"
+              ><fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>
+            </a>
+          </li>
+          <li>
             <a (click)="authService.signOut()"
               ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
             </a>

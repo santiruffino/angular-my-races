@@ -4,7 +4,7 @@
       <div class="text-center lg:text-left">
         <div class="card w-96 santi-glass">
           <div class="card-body">
-            <h1 class="text-5xl font-bold">Bienvenido! 👋🏻</h1>
+            <h1 class="text-5xl font-bold">Hola! 👋🏻</h1>
             <p>
               Todos los runners sabemos lo complicado que es buscar el tiempo de
               una carrera que hiciste hace mucho tiempo, asi que la idea de esto
@@ -67,19 +67,25 @@
               <label class="label">
                 <span class="label-text">Contraseña</span>
               </label>
-              <input
-                type="text"
-                placeholder="Contraseña"
-                [ngClass]="
-                  (!loginForm.controls['password'].valid &&
-                    loginForm.controls['password'].touched) ||
-                  (invalidControls.includes('password') &&
-                    !loginForm.controls['password'].touched)
-                    ? 'input input-bordered bg-white bg-white border-red-500'
-                    : 'input input-bordered bg-white bg-white'
-                "
-                formControlName="password"
-              />
+              <div class="join">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  placeholder="Contraseña"
+                  [ngClass]="
+                    (!loginForm.controls['password'].valid &&
+                      loginForm.controls['password'].touched) ||
+                    (invalidControls.includes('password') &&
+                      !loginForm.controls['password'].touched)
+                      ? 'input input-bordered bg-white bg-white border-red-500 join-item grow'
+                      : 'input input-bordered bg-white bg-white join-item grow'
+                  "
+                  formControlName="password"
+                />
+                <button class="btn join-item" (click)="showPasswordToggle()">
+                  <fa-icon *ngIf="showPassword" [icon]="faEye"></fa-icon>
+                  <fa-icon *ngIf="!showPassword" [icon]="faEyeSlash"></fa-icon>
+                </button>
+              </div>
               <label class="label">
                 <small>
                   <a href="/forgot-password" class="link-info"

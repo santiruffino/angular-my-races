@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   allRaces: Race[] = [];
   originalAllRaces: Race[] = [];
   hideWhenNoRace: boolean = false;
-  noData: boolean = false;
+  noData: boolean = true;
   preLoader: boolean = true;
   userData: Login = {
     uid: '',

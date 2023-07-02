@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,6 +14,9 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
   });
   invalidControls: string[] = [];
+  showPassword: boolean = false;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   constructor(
     public authService: AuthService,
@@ -45,5 +49,9 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls['email'].value,
       this.loginForm.controls['password'].value
     );
+  }
+
+  showPasswordToggle() {
+    this.showPassword = !this.showPassword;
   }
 }

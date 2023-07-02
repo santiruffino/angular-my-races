@@ -15,28 +15,50 @@
       </div>
       <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         <div class="card-body">
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Email"
-              class="input input-bordered bg-white bg-white"
-              formControlName="email"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Contraseña"
-              class="input input-bordered bg-white bg-white"
-              formControlName="password"
-            />
-          </div>
+          <form [formGroup]="signUpForm">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Email</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Email"
+                [ngClass]="
+                  (!signUpForm.controls['email'].valid &&
+                    signUpForm.controls['email'].touched) ||
+                  (invalidControls.includes('email') &&
+                    !signUpForm.controls['email'].touched)
+                    ? 'input input-bordered bg-white bg-white border-red-500 text-red-600'
+                    : 'input input-bordered bg-white bg-white'
+                "
+                formControlName="email"
+              />
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">Password</span>
+              </label>
+              <div class="join">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  placeholder="Contraseña"
+                  [ngClass]="
+                    (!signUpForm.controls['password'].valid &&
+                      signUpForm.controls['password'].touched) ||
+                    (invalidControls.includes('password') &&
+                      !signUpForm.controls['password'].touched)
+                      ? 'input input-bordered bg-white bg-white border-red-500 join-item grow'
+                      : 'input input-bordered bg-white bg-white join-item grow'
+                  "
+                  formControlName="password"
+                />
+                <button class="btn join-item" (click)="showPasswordToggle()">
+                  <fa-icon *ngIf="showPassword" [icon]="faEye"></fa-icon>
+                  <fa-icon *ngIf="!showPassword" [icon]="faEyeSlash"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </form>
           <small
             >Ya tienes cuenta?
             <a class="label-text-alt link link-hover" href="/login"
