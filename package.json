@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org santis-company --project javascript-angular ./dist && sentry-cli sourcemaps upload --org santis-company --project javascript-angular ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org santis-company --project javascript-angular ./dist/angular13-project && sentry-cli sourcemaps upload --org santis-company --project javascript-angular ./dist/angular13-project",
+    "ng build": "ng build && npm run sentry:sourcemaps"
   },
   "private": true,
   "dependencies": {

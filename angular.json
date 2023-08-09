@@ -21,6 +21,7 @@
         "build": {
           "builder": "@ngx-env/builder:browser",
           "options": {
+            "sourceMap": true,
             "outputPath": "dist/angular13-project",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -109,7 +110,8 @@
             "ssr": false,
             "browserTarget": "Angular13Project:build:production",
             "firebaseProject": "races-app-534ee",
-            "firebaseHostingSite": "races-app-534ee"
+            "firebaseHostingSite": "races-app-534ee",
+            "sourceMap": true
           }
         },
         "lint": {

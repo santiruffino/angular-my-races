@@ -83,8 +83,4 @@ export class LoginComponent implements OnInit {
   showModalAlert() {
     const dialog = <HTMLInputElement>document.getElementById('my_modal_1');
   }
-
-  sentryTest() {
-    throw new Error('Sentry Test Error');
-  }
 }
