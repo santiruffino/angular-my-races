@@ -2,7 +2,7 @@
   <div class="hero text-primary min-h-screen">
     <div class="hero-content flex-col lg:flex-row-reverse">
       <div class="text-center lg:text-left">
-        <div class="card w-96 santi-glass">
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl santi-glass">
           <div class="card-body">
             <h1 class="text-5xl font-bold">Hola! 👋🏻</h1>
             <p>
@@ -43,6 +43,16 @@
             </div>
           </div>
           <div class="divider">O</div>
+          <div class="alert alert-error" *ngIf="loginError">
+            <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
+            <div>
+              <h3 class="font-bold">Error 😭</h3>
+              <div class="text-xs">{{ loginErrorMessage | translate }}</div>
+            </div>
+            <div>
+              <button class="btn btn-sm btn-ghost">X</button>
+            </div>
+          </div>
           <form [formGroup]="loginForm">
             <div class="form-control">
               <label class="label">

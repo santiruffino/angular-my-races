@@ -10,5 +10,6 @@ export const environment = {
     messagingSenderId: import.meta.env['NG_APP_MESSAGING_SENDER_ID'],
     measurementId: import.meta.env['NG_APP_MEASUREMENT_ID'],
   },
+  sentryDsn: import.meta.env['NG_APP_SENTRY_DSN'],
   production: true,
 };

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { filter, map } from 'rxjs';
 
 @Component({
@@ -11,7 +12,14 @@ import { filter, map } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'Mis carreras 🏅';
 
-  constructor(private router: Router, private titleService: Title) {}
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private translate: TranslateService
+  ) {
+    translate.setDefaultLang('es');
+    translate.use('es');
+  }
 
   ngOnInit() {
     this.router.events

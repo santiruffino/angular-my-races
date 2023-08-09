@@ -2,7 +2,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleExclamation,
+  faEye,
+  faEyeSlash,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './login.component.html',
@@ -17,6 +21,9 @@ export class LoginComponent implements OnInit {
   showPassword: boolean = false;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
+  faCircleExclamation = faCircleExclamation;
+  loginError = false;
+  loginErrorMessage = '';
 
   constructor(
     public authService: AuthService,
@@ -45,13 +52,39 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.analytics.logEvent('Login - Login Error Sucess');
-    this.authService.signIn(
-      this.loginForm.controls['email'].value,
-      this.loginForm.controls['password'].value
-    );
+    try {
+      this.authService
+        .signIn(
+          this.loginForm.controls['email'].value,
+          this.loginForm.controls['password'].value
+        )
+        .then((result: any) => {
+          console.log(result.code);
+          console.log(result.message);
+
+          if (result.code === 'auth/user-not-found') {
+            this.loginError = true;
+            this.loginErrorMessage = `errors.${result.code}`;
+          }
+        });
+    } catch {
+      console.log('ERROR');
+    }
   }
 
   showPasswordToggle() {
     this.showPassword = !this.showPassword;
+  }
+
+  hideErrorAlert() {
+    this.loginError = false;
+  }
+
+  showModalAlert() {
+    const dialog = <HTMLInputElement>document.getElementById('my_modal_1');
+  }
+
+  sentryTest() {
+    throw new Error('Sentry Test Error');
   }
 }

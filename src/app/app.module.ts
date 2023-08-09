@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +27,16 @@ import { VerifyEmailComponentComponent } from './pages/verify-email-component/ve
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditRaceComponent } from './pages/edit-race/edit-race.component';
 import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/forgot-password-success.component';
+import { AuthActionsComponent } from './pages/auth-actions/auth-actions.component';
+import * as Sentry from '@sentry/angular-ivy';
+import { Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +49,7 @@ import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/
     VerifyEmailComponentComponent,
     EditRaceComponent,
     ForgotPasswordSuccessComponent,
+    AuthActionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +58,15 @@ import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     FontAwesomeModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'es',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
@@ -55,6 +74,22 @@ import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/
     GoogleAuthProvider,
     ScreenTrackingService,
     UserTrackingService,
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

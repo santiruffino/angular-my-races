@@ -8,4 +8,5 @@ export interface Race {
   type: string;
   pace: string;
   externalActivityUrl?: string;
+  surface: string;
 }

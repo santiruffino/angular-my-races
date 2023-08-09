@@ -126,11 +126,39 @@
                   "
                 />
               </div>
+              <div class="form-control w-full max-w-xs">
+                <label class="label">
+                  <span class="label-text text-primary">Superficie</span>
+                </label>
+                <select
+                  class="select select-bordered bg-white"
+                  formControlName="surface"
+                  [ngClass]="
+                    (!raceForm.controls['surface'].valid &&
+                      raceForm.controls['surface'].touched) ||
+                    (invalidControls.includes('surface') &&
+                      !raceForm.controls['surface'].touched)
+                      ? 'input input-bordered bg-white border-red-500'
+                      : 'input input-bordered bg-white'
+                  "
+                >
+                  <option disabled selected [ngValue]="null">Elegí una</option>
+                  <option
+                    *ngFor="let surface of surfacesValues"
+                    [ngValue]="surface"
+                  >
+                    {{ surface }}
+                  </option>
+                </select>
+              </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
                   <span class="label-text"
                     >Actividad en otra app?
-                    <div class="tooltip tooltip-secondary" data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava">
+                    <div
+                      class="tooltip tooltip-secondary"
+                      data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
+                    >
                       <fa-icon [icon]="faCircleInfo" class="fa-sm"></fa-icon>
                     </div>
                   </span>

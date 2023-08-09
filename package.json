@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org santis-company --project javascript-angular ./dist && sentry-cli sourcemaps upload --org santis-company --project javascript-angular ./dist"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,9 @@
     "@fortawesome/angular-fontawesome": "^0.10.2",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
+    "@sentry/angular-ivy": "^7.60.0",
     "daisyui": "^3.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

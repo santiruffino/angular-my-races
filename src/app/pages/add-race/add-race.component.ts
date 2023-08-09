@@ -37,7 +37,9 @@ export class AddRaceComponent implements OnInit {
         Validators.pattern('[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?'),
       ],
     ],
+    surface: [null, Validators.required],
   });
+  surfacesValues: string[] = ['Calle', 'Trail', 'Cross', 'Otros'];
   nameInvalid: boolean = false;
   externalActivity: boolean = false;
   invalidControls: string[] = [];
@@ -88,6 +90,7 @@ export class AddRaceComponent implements OnInit {
 
   addRace() {
     this.analytics.logEvent('Add Race - Create Race Button Click');
+    console.log(this.raceForm.value);
     if (!this.raceForm.valid) {
       this.analytics.logEvent('Add Race - Create Race Error - Form Invalid');
       this.invalidControls = this.findInvalidControls();
