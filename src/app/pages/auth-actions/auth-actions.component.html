@@ -1,0 +1,29 @@
+<ng-template #resetPassword>
+  <h1 class="text-5xl font-bold">Tu contraseña fue resetada con exito ✅</h1>
+  <p>
+    Te enviamos un mail a tu correo electronico para que puedas volver a
+    ingresar 😊
+  </p>
+</ng-template>
+
+<div class="background">
+  <div class="hero text-primary min-h-screen">
+    <div class="hero-content flex-col w-full">
+      <div class="text-left">
+        <div class="card flex-shrink-0 w-full shadow-2xl santi-glass">
+          <div class="card-body">
+            <ng-container
+              *ngIf="actionName === 'verifyEmail'; else resetPassword"
+            >
+              <h1 class="text-5xl font-bold">Tu cuenta ya fue verificada ✅</h1>
+              <p>
+                Te enviamos un mail a tu correo electronico para que puedas
+                volver a ingresar 😊
+              </p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

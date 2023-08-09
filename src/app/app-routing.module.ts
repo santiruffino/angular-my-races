@@ -1,3 +1,4 @@
+import { AuthActionsComponent } from './pages/auth-actions/auth-actions.component';
 import { ForgotPasswordSuccessComponent } from './pages/forgot-password-success/forgot-password-success.component';
 import { EditRaceComponent } from './pages/edit-race/edit-race.component';
 import { VerifyEmailComponentComponent } from './pages/verify-email-component/verify-email-component.component';
@@ -52,6 +53,11 @@ const routes: Routes = [
     path: 'edit-race/:key',
     component: EditRaceComponent,
     data: { title: 'Editar carrera' },
+  },
+  {
+    path: 'auth-action/:action',
+    component: AuthActionsComponent,
+    data: { title: 'Auth Exitoso' },
   },
 ];
 
