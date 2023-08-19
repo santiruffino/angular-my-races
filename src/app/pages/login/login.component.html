@@ -53,7 +53,7 @@
               <button class="btn btn-sm btn-ghost">X</button>
             </div>
           </div>
-          <form [formGroup]="loginForm">
+          <form [formGroup]="loginForm" (keydown.enter)="login()">
             <div class="form-control">
               <label class="label">
                 <span class="label-text">Email</span>

@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       this.analytics.logEvent('Login - Login Error - Form Invalid');
       return;
     }
-    this.analytics.logEvent('Login - Login Error Sucess');
+    this.analytics.logEvent('Login - Login Error Success');
     try {
       this.authService
         .signIn(

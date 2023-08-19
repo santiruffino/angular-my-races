@@ -129,10 +129,17 @@ export class AddRaceComponent implements OnInit {
   }
 
   formatRaceTime(value: any) {
-    const testNumber = value.target.value;
-    var foo = testNumber.split(':').join('');
-    if (foo && foo.length > 0 && foo.length <= 6) {
-      this.formatedTime = foo.match(new RegExp('.{1,2}', 'g'))!.join(':');
+    const number = value.target.value;
+    var foo = number.split(':').join('');
+    let newNumber = '';
+    for (let i = 0; i < foo.length; i += 2) {
+      if (i + 1 < foo.length - 1) {
+        newNumber += foo.substring(i, i + 2) + ':';
+      } else {
+        newNumber += foo.substring(i);
+      }
     }
+    console.log(newNumber);
+    this.formatedTime = newNumber;
   }
 }

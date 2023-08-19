@@ -107,7 +107,7 @@
         <label
           *ngIf="!noData"
           (click)="addRace()"
-          class="btn fixed z-90 bottom-10 right-8 w-20 h-20 drop-shadow-lg flex justify-center items-center text-4xl btn-primary hover:drop-shadow-2xl hover:animate-bounce duration-300"
+          class="btn fixed z-90 bottom-5 right-8 w-20 h-20 drop-shadow-lg flex justify-center items-center text-4xl btn-primary hover:drop-shadow-2xl hover:animate-bounce duration-300"
           >&#43;</label
         >
       </div>
@@ -133,7 +133,9 @@
           </div>
         </div>
       </div>
-      <label class="btn btn-ghost btn-disabled" *ngIf="!noData">Ir al año</label>
+      <label class="btn btn-ghost btn-disabled" *ngIf="!noData"
+        >Ir al año</label
+      >
       <!-- Sidebar content here -->
       <div *ngFor="let year of allRacesByYear; let i = index">
         <li>

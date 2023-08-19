@@ -42,7 +42,6 @@ export class AuthService {
         this.setUserData(result.user);
       })
       .catch((error) => {
-        // window.alert(error.message);
         console.log('Falle en el sign In');
         return error;
       });
