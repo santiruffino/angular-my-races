@@ -22,7 +22,10 @@
 
 <div class="card card-compact bg-base-100 shadow-xl">
   <div class="card-body px-2">
-    <h2 class="card-title text-base-content">{{ race.name }}</h2>
+    <h2 class="card-title text-base-content">
+      <fa-icon [icon]="race.surfaceIcon"></fa-icon>
+      {{ race.name }}
+    </h2>
     <h2 class="card-title text-base-content">
       {{ race.date | date : "mediumDate" }}
     </h2>

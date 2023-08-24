@@ -1,3 +1,5 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 export interface Race {
   $key: string;
   name: string;
@@ -9,4 +11,5 @@ export interface Race {
   pace: string;
   externalActivityUrl?: string;
   surface: string;
+  surfaceIcon: IconProp;
 }

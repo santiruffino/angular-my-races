@@ -39,7 +39,7 @@ export class AddRaceComponent implements OnInit {
     ],
     surface: [null, Validators.required],
   });
-  surfacesValues: string[] = ['Calle', 'Trail', 'Cross', 'Otros'];
+  surfacesValues: string[] = ['calle', 'trail', 'cross', 'otros'];
   nameInvalid: boolean = false;
   externalActivity: boolean = false;
   invalidControls: string[] = [];
@@ -104,7 +104,10 @@ export class AddRaceComponent implements OnInit {
         .then((result): any => {
           this.analytics.logEvent('Add Race - Create Race Success');
           this.resetForm();
-          this.router.navigate(['races']);
+          this.router.navigate(['races'], {
+            queryParams: { status: 'success' },
+          });
+          // this.router.navigate(['races']);
         })
         .catch((error: any) => {
           console.error('Error: ', error.message);

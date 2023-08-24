@@ -9,8 +9,12 @@ import {
 import { Race } from 'src/app/interfaces/race';
 import {
   faExternalLinkAlt,
+  faMountain,
   faPen,
+  faPersonRunning,
+  faRoad,
   faTrash,
+  faTree,
 } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Ripple, initTE } from 'tw-elements';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
@@ -28,6 +32,11 @@ export class RaceCardComponent implements OnInit {
   faExternalLinkAlt = faExternalLinkAlt;
   faPen = faPen;
   faTrash = faTrash;
+  faRoad = faRoad;
+  faMountain = faMountain;
+  faTree = faTree;
+  faPersonRunning = faPersonRunning;
+
   raceSelected!: Race;
 
   constructor(private analytics: AngularFireAnalytics) {}
@@ -35,6 +44,7 @@ export class RaceCardComponent implements OnInit {
   ngOnInit(): void {
     initTE({ Modal, Ripple });
     this.calculatePace(this.race.distanceValue, this.race.time);
+    this.calculateRaceIcon(this.race.surface);
   }
 
   cancelDeleteRace() {
@@ -44,6 +54,23 @@ export class RaceCardComponent implements OnInit {
   deleteRaceModal(race: Race) {
     this.raceSelected = race;
     this.analytics.logEvent('Race Card - Delete Race Button Click');
+  }
+
+  calculateRaceIcon(surface: string) {
+    switch (surface) {
+      case 'calle':
+        this.race.surfaceIcon = faRoad;
+        break;
+      case 'trail':
+        this.race.surfaceIcon = faMountain;
+        break;
+      case 'cross':
+        this.race.surfaceIcon = faTree;
+        break;
+      default:
+        this.race.surfaceIcon = faPersonRunning;
+        break;
+    }
   }
 
   deleteRace(raceKey: string) {

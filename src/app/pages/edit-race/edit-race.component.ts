@@ -14,6 +14,7 @@ import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import {
   faBars,
   faCircleExclamation,
+  faCircleInfo,
   faHouse,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
@@ -30,7 +31,15 @@ export class EditRaceComponent implements OnInit {
     distanceValue: [, Validators.required],
     distanceUnit: ['Km', Validators.required],
     date: [, Validators.required],
-    time: [, Validators.required],
+    time: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(8),
+        Validators.pattern('[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?'),
+      ],
+    ],
+    surface: [null, Validators.required],
   });
   invalidControls: string[] = [];
   externalActivity!: boolean;
@@ -41,9 +50,11 @@ export class EditRaceComponent implements OnInit {
   faHouse = faHouse;
   faRightFromBracket = faRightFromBracket;
   faCircleExclamation = faCircleExclamation;
+  faCircleInfo = faCircleInfo;
   formatedTime!: string;
   isCreatingRace: boolean = false;
   editRaceError: boolean = false;
+  surfacesValues: string[] = ['calle', 'trail', 'cross', 'otros'];
 
   constructor(
     private route: ActivatedRoute,
@@ -66,6 +77,7 @@ export class EditRaceComponent implements OnInit {
   }
 
   fillRaceForm(raceInfo: Race) {
+    console.log(raceInfo);
     this.raceForm.controls['key'].setValue(this.raceKey);
     this.raceForm.controls['name'].setValue(raceInfo.name);
     this.raceForm.controls['distanceValue'].setValue(raceInfo.distanceValue);
@@ -73,7 +85,14 @@ export class EditRaceComponent implements OnInit {
     this.raceForm.controls['date'].setValue(raceInfo.date);
     this.raceForm.controls['time'].setValue(raceInfo.time);
     if (raceInfo.externalActivityUrl) {
-      this.raceForm.controls['externalActivityUrl'].setValue(raceInfo.externalActivityUrl);
+      this.externalActivity = true;
+      this.raceForm.addControl(
+        'externalActivityUrl',
+        new FormControl('', Validators.required)
+      );
+      this.raceForm.controls['externalActivityUrl'].setValue(
+        raceInfo.externalActivityUrl
+      );
     }
   }
 
@@ -102,11 +121,18 @@ export class EditRaceComponent implements OnInit {
   }
 
   formatRaceTime(value: any) {
-    const testNumber = value.target.value;
-    var foo = testNumber.split(':').join('');
-    if (foo && foo.length > 0 && foo.length <= 6) {
-      this.formatedTime = foo.match(new RegExp('.{1,2}', 'g'))!.join(':');
+    const number = value.target.value;
+    var foo = number.split(':').join('');
+    let newNumber = '';
+    for (let i = 0; i < foo.length; i += 2) {
+      if (i + 1 < foo.length - 1) {
+        newNumber += foo.substring(i, i + 2) + ':';
+      } else {
+        newNumber += foo.substring(i);
+      }
     }
+    console.log(newNumber);
+    this.formatedTime = newNumber;
   }
 
   hideErrorAlert() {
@@ -114,6 +140,7 @@ export class EditRaceComponent implements OnInit {
   }
 
   saveRaceChanges() {
+    console.log(this.raceForm.value);
     this.analytics.logEvent('Edit Race - Edit Race Button Click');
     if (!this.raceForm.valid) {
       this.analytics.logEvent('Edit Race - Edit Race Error - Form Invalid');
@@ -126,7 +153,9 @@ export class EditRaceComponent implements OnInit {
       distanceUnit: this.raceForm.controls['distanceUnit'].value,
       time: this.raceForm.controls['time'].value,
       date: this.raceForm.controls['date'].value,
-      externalActivityUrl: this.raceForm.controls['externalActivityUrl'].value || '',
+      surface: this.raceForm.controls['surface'].value,
+      externalActivityUrl:
+        this.raceForm.controls['externalActivityUrl'].value || '',
     };
 
     if (this.raceKey) {

@@ -12,7 +12,7 @@ import { Race } from 'src/app/interfaces/race';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   faBars,
   faMagnifyingGlass,
@@ -53,15 +53,18 @@ export class DashboardComponent implements OnInit {
   filteredRaces!: Race[];
   searchSubscription: any;
   searchSubject: any;
+  raceCreated = false;
 
   constructor(
     public crudApi: CrudService,
     public authService: AuthService,
     private analytics: AngularFireAnalytics,
-    public router: Router
+    public router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.showCreationToast();
     this.userData = this.authService.userData;
     this.dataState();
     let s = this.crudApi.getRacesList();
@@ -78,6 +81,13 @@ export class DashboardComponent implements OnInit {
       this.generateYearsArray();
       this.loading = false;
     });
+  }
+
+  showCreationToast() {
+    this.raceCreated =
+      this.route.snapshot.queryParamMap.get('status') === 'success'
+        ? true
+        : false;
   }
 
   addRace() {

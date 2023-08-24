@@ -1,5 +1,7 @@
 {
   "errors": {
-      "auth/user-not-found": "El usuario ingresado no ta"
-  }
+    "auth/user-not-found": "El usuario ingresado no existe"
+  },
+  "race_created_success": "Carrera creada con exito 💪🏻",
+  "race_created_error": "No se pudo crear la carrera 💪🏻"
 }

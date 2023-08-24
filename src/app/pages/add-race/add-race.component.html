@@ -34,9 +34,11 @@
       </div>
     </div>
     <div class="hero min-h-screen bg-ghost">
-      <div class="hero-content flex-col lg:flex-row-reverse">
-        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form [formGroup]="raceForm">
+      <div class="hero-content flex-col lg:flex-row-reverse w-full">
+        <div
+          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 min-w-full"
+        >
+          <form [formGroup]="raceForm" class="lg:hidden single-form">
             <div class="card-body">
               <div class="form-control">
                 <label class="label">
@@ -66,6 +68,7 @@
                     type="number"
                     placeholder="42"
                     min="1"
+                    class="grow"
                     [ngClass]="
                       (!raceForm.controls['distanceValue'].valid &&
                         raceForm.controls['distanceValue'].touched) ||
@@ -126,7 +129,7 @@
                   "
                 />
               </div>
-              <div class="form-control w-full max-w-xs">
+              <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text text-primary">Superficie</span>
                 </label>
@@ -147,7 +150,7 @@
                     *ngFor="let surface of surfacesValues"
                     [ngValue]="surface"
                   >
-                    {{ surface }}
+                    {{ surface | titlecase }}
                   </option>
                 </select>
               </div>
@@ -207,6 +210,191 @@
                     X
                   </button>
                 </div>
+              </div>
+            </div>
+          </form>
+          <form [formGroup]="raceForm" class="hidden lg:block double-form">
+            <div class="card-body">
+              <div class="grid grid-cols-2 gap-24 p-5">
+                <div>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text">Nombre de la carrera</span>
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Patagonia Run"
+                      [ngClass]="
+                        (!raceForm.controls['name'].valid &&
+                          raceForm.controls['name'].touched) ||
+                        (invalidControls.includes('name') &&
+                          !raceForm.controls['name'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                      formControlName="name"
+                    />
+                  </div>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text">Fecha</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="date"
+                      placeholder="dd/mm/aaaa"
+                      class="input input-bordered bg-white"
+                      formControlName="date"
+                      [ngClass]="
+                        (!raceForm.controls['date'].valid &&
+                          raceForm.controls['date'].touched) ||
+                        (invalidControls.includes('date') &&
+                          !raceForm.controls['date'].touched)
+                          ? 'input input-bordered bg-white border-red-500 input-date'
+                          : 'input input-bordered bg-white input-date'
+                      "
+                    />
+                  </div>
+
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text">Distancia</span>
+                    </label>
+                    <label class="input-group">
+                      <input
+                        type="number"
+                        placeholder="42"
+                        min="1"
+                        class="grow"
+                        [ngClass]="
+                          (!raceForm.controls['distanceValue'].valid &&
+                            raceForm.controls['distanceValue'].touched) ||
+                          (invalidControls.includes('distanceValue') &&
+                            !raceForm.controls['distanceValue'].touched)
+                            ? 'input input-bordered bg-white border-red-500'
+                            : 'input input-bordered bg-white'
+                        "
+                        formControlName="distanceValue"
+                      />
+                      <select
+                        class="select select-bordered"
+                        formControlName="distanceUnit"
+                      >
+                        <option selected>Km</option>
+                        <option>Mi</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text">Tiempo</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="hh:mm:ss"
+                      [ngClass]="
+                        (!raceForm.controls['time'].valid &&
+                          raceForm.controls['time'].touched) ||
+                        (invalidControls.includes('time') &&
+                          !raceForm.controls['time'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                      formControlName="time"
+                      (keyup)="formatRaceTime($event)"
+                      value="{{ formatedTime }}"
+                      maxlength="8"
+                    />
+                  </div>
+                  <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text text-primary">Superficie</span>
+                    </label>
+                    <select
+                      class="select select-bordered bg-white"
+                      formControlName="surface"
+                      [ngClass]="
+                        (!raceForm.controls['surface'].valid &&
+                          raceForm.controls['surface'].touched) ||
+                        (invalidControls.includes('surface') &&
+                          !raceForm.controls['surface'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                    >
+                      <option disabled selected [ngValue]="null">
+                        Elegí una
+                      </option>
+                      <option
+                        *ngFor="let surface of surfacesValues"
+                        [ngValue]="surface"
+                      >
+                        {{ surface | titlecase }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-control">
+                    <label class="label cursor-pointer">
+                      <span class="label-text"
+                        >Actividad en otra app?
+                        <div
+                          class="tooltip tooltip-secondary"
+                          data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
+                        >
+                          <fa-icon
+                            [icon]="faCircleInfo"
+                            class="fa-sm"
+                          ></fa-icon>
+                        </div>
+                      </span>
+                      <input
+                        type="checkbox"
+                        class="toggle toggle-secondary"
+                        (click)="toggleExternalActivityLink($event)"
+                      />
+                    </label>
+                    <input
+                      *ngIf="externalActivity"
+                      type="text"
+                      placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
+                      [ngClass]="
+                        (!raceForm.controls['externalActivityUrl'].valid &&
+                          raceForm.controls['externalActivityUrl'].touched) ||
+                        (invalidControls.includes('externalActivityUrl') &&
+                          !raceForm.controls['externalActivityUrl'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                      formControlName="externalActivityUrl"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-control pb-5 px-5">
+              <button
+                class="btn btn-primary"
+                (click)="addRace()"
+                *ngIf="!isCreatingRace"
+              >
+                Crear
+              </button>
+              <button class="btn btn-primary" *ngIf="isCreatingRace">
+                <span class="loading loading-spinner"></span>
+                Creando
+              </button>
+            </div>
+            <div class="alert alert-error" *ngIf="createRaceError">
+              <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
+              <span>Error! No pudimos crear la carrera 😭</span>
+              <div>
+                <button class="btn btn-sm btn-ghost" (click)="hideErrorAlert()">
+                  X
+                </button>
               </div>
             </div>
           </form>
