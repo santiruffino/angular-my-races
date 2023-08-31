@@ -14,7 +14,7 @@
         <a
           class="btn btn-ghost text-primary-content normal-case text-xl"
           [routerLink]="'/races'"
-          >Mis Carreras</a
+          >{{ "my_races" | translate }}</a
         >
       </div>
       <div class="flex-none hidden lg:block">
@@ -30,12 +30,14 @@
     </div>
     <div class="hero min-h-screen bg-ghost">
       <div class="hero-content flex-col lg:flex-row-reverse w-full">
-        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 min-w-full">
+        <div
+          class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 min-w-full"
+        >
           <form [formGroup]="raceForm" class="lg:hidden single-form">
             <div class="card-body">
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">Nombre de la carrera</span>
+                  <span class="label-text">{{ "race_name" | translate }}</span>
                 </label>
                 <input
                   required
@@ -54,7 +56,7 @@
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">Distancia</span>
+                  <span class="label-text">{{ "distance" | translate }}</span>
                 </label>
                 <label class="input-group">
                   <input
@@ -75,14 +77,16 @@
                     class="select select-bordered"
                     formControlName="distanceUnit"
                   >
-                    <option selected>Km</option>
-                    <option>Mi</option>
+                    <option selected>
+                      {{ "distance_units.kms" | translate }}
+                    </option>
+                    <option>{{ "distance_units.mi" | translate }}</option>
                   </select>
                 </label>
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">Tiempo</span>
+                  <span class="label-text">{{ "time" | translate }}</span>
                 </label>
                 <input
                   type="text"
@@ -103,7 +107,7 @@
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">Fecha</span>
+                  <span class="label-text">{{ "date" | translate }}</span>
                 </label>
                 <input
                   type="date"
@@ -123,8 +127,11 @@
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
-                  <span class="label-text">Actividad de otra app?</span>
+                  <span class="label-text">{{
+                    "other_app_activity" | translate
+                  }}</span>
                   <input
+                    [checked]="externalActivity"
                     type="checkbox"
                     class="toggle toggle-secondary"
                     (click)="toggleExternalActivityLink($event)"
@@ -151,16 +158,16 @@
                   (click)="saveRaceChanges()"
                   *ngIf="!isCreatingRace"
                 >
-                  Guardar
+                  {{ "actions.save" | translate }}
                 </button>
                 <button class="btn btn-primary" *ngIf="isCreatingRace">
                   <span class="loading loading-spinner"></span>
-                  Guardando
+                  {{ "actions.saving" | translate }}
                 </button>
               </div>
               <div class="alert alert-error" *ngIf="editRaceError">
                 <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
-                <span>Error! No pudimos editar la carrera 😭</span>
+                <span>{{ "race_edit_error" | translate }}</span>
                 <div>
                   <button
                     class="btn btn-sm btn-ghost"
@@ -178,7 +185,9 @@
                 <div>
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">Nombre de la carrera</span>
+                      <span class="label-text">{{
+                        "race_name" | translate
+                      }}</span>
                     </label>
                     <input
                       required
@@ -197,7 +206,7 @@
                   </div>
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">Fecha</span>
+                      <span class="label-text">{{ "date" | translate }}</span>
                     </label>
                     <input
                       type="date"
@@ -218,7 +227,9 @@
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">Distancia</span>
+                      <span class="label-text">{{
+                        "distance" | translate
+                      }}</span>
                     </label>
                     <label class="input-group">
                       <input
@@ -240,8 +251,10 @@
                         class="select select-bordered"
                         formControlName="distanceUnit"
                       >
-                        <option selected>Km</option>
-                        <option>Mi</option>
+                        <option selected>
+                          {{ "distance_units.kms" | translate }}
+                        </option>
+                        <option>{{ "distance_units.mi" | translate }}</option>
                       </select>
                     </label>
                   </div>
@@ -249,7 +262,7 @@
                 <div>
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">Tiempo</span>
+                      <span class="label-text">{{ "time" | translate }}</span>
                     </label>
                     <input
                       type="text"
@@ -270,7 +283,9 @@
                   </div>
                   <div class="form-control w-full">
                     <label class="label">
-                      <span class="label-text text-primary">Superficie</span>
+                      <span class="label-text text-primary">{{
+                        "surface" | translate
+                      }}</span>
                     </label>
                     <select
                       class="select select-bordered bg-white"
@@ -285,7 +300,7 @@
                       "
                     >
                       <option disabled selected [ngValue]="null">
-                        Elegí una
+                        {{ "pick_one" | translate }}
                       </option>
                       <option
                         *ngFor="let surface of surfacesValues"
@@ -299,7 +314,7 @@
                   <div class="form-control">
                     <label class="label cursor-pointer">
                       <span class="label-text"
-                        >Actividad en otra app?
+                        >{{ "other_app_activity" | translate }}
                         <div
                           class="tooltip tooltip-secondary"
                           data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
@@ -311,6 +326,7 @@
                         </div>
                       </span>
                       <input
+                        [checked]="externalActivity"
                         type="checkbox"
                         class="toggle toggle-secondary"
                         (click)="toggleExternalActivityLink($event)"
@@ -340,21 +356,18 @@
                 (click)="saveRaceChanges()"
                 *ngIf="!isCreatingRace"
               >
-                Guardar
+                {{ "actions.save" | translate }}
               </button>
               <button class="btn btn-primary" *ngIf="isCreatingRace">
                 <span class="loading loading-spinner"></span>
-                Guardando
+                {{ "actions.saving" | translate }}
               </button>
             </div>
             <div class="alert alert-error" *ngIf="editRaceError">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
-              <span>Error! No pudimos editar la carrera 😭</span>
+              <span>{{ "race_edit_error" | translate }}</span>
               <div>
-                <button
-                  class="btn btn-sm btn-ghost"
-                  (click)="hideErrorAlert()"
-                >
+                <button class="btn btn-sm btn-ghost" (click)="hideErrorAlert()">
                   X
                 </button>
               </div>
@@ -369,14 +382,15 @@
     <ul class="menu p-4 w-80 h-full bg-base-200">
       <li>
         <a [routerLink]="'/races'">
-          <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>Ir al inicio</a
+          <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon
+          >{{ "go_home_page" | translate }}</a
         >
       </li>
       <div class="divider"></div>
       <li>
         <a (click)="authService.signOut()">
           <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
-          Cerrar sesion
+          {{ "sign_out" | translate }}
         </a>
       </li>
     </ul>

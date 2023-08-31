@@ -1,20 +1,25 @@
 <input type="checkbox" id="my-modal" class="modal-toggle" />
 <div class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">
-    <h3 class="font-bold text-lg">Eliminar</h3>
-    <p class="py-4">
-      Estas seguro que desea eliminar la carrera <b>{{ raceSelected?.name }}</b
-      >?
-    </p>
+    <h3 class="font-bold text-lg">{{ "actions.delete" | translate }}</h3>
+    <p
+      class="py-4"
+      [innerHTML]="
+        'actions.delete_race_confirmation' | translate : { race: race.name }
+      "
+    ></p>
     <div class="modal-action">
-      <label for="my-modal" class="btn btn-outline" (click)="cancelDeleteRace()"
-        >Cancelar</label
+      <label
+        for="my-modal"
+        class="btn btn-outline"
+        (click)="cancelDeleteRace()"
+        >{{ "actions.cancel" | translate }}</label
       >
       <label
         for="my-modal"
         class="btn btn-error"
         (click)="deleteRace(raceSelected.$key)"
-        >Eliminar</label
+        >{{ "actions.delete" | translate }}</label
       >
     </div>
   </div>
@@ -33,19 +38,19 @@
       class="stats bg-white text-secondary-content stats-vertical lg:stats-horizontal shadow"
     >
       <div class="stat px-5">
-        <div class="stat-title">Distancia</div>
+        <div class="stat-title">{{ "distance" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
           {{ race.distanceValue }}{{ race.distanceUnit }}
         </div>
       </div>
 
       <div class="stat px-5">
-        <div class="stat-title">Tiempo</div>
+        <div class="stat-title">{{ "time" | translate }}</div>
         <div class="stat-value text-xl text-info-content">{{ race.time }}</div>
       </div>
 
       <div class="stat px-5">
-        <div class="stat-title">Ritmo</div>
+        <div class="stat-title">{{ "pace" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
           {{ race.pace }}/{{ race.distanceUnit }}
         </div>

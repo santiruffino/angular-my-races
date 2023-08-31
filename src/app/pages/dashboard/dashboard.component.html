@@ -15,7 +15,7 @@
         <a
           class="btn btn-ghost text-primary-content normal-case text-xl"
           [routerLink]="'/races'"
-          >Mis Carreras</a
+          >{{ "my_races" | translate }}</a
         >
       </div>
       <div class="flex-none hidden lg:block">
@@ -41,7 +41,9 @@
           </div>
           <li tabindex="0" *ngIf="!noData">
             <details class="w-100">
-              <summary class="font-bold text-base w-100">Ir al año</summary>
+              <summary class="font-bold text-base w-100">
+                {{ "go_to_year" | translate }}
+              </summary>
               <ul class="p-2 full-width year-selector">
                 <div *ngFor="let year of yearsArray">
                   <li class="text-primary">
@@ -72,9 +74,11 @@
       >
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl santi-glass">
           <div class="card-body">
-            <h1 class="text-5xl font-bold pb-5">No hay carreras cargadas 🥺</h1>
+            <h1 class="text-5xl font-bold pb-5">
+              {{ "no_races_loaded" | translate }}
+            </h1>
             <button class="btn btn-primary" (click)="addRace()">
-              Crear Carrera
+              {{ "actions.create_race" | translate }}
             </button>
           </div>
         </div>
@@ -96,9 +100,12 @@
                 *ngFor="let race of year.races"
                 class="w-full xl:w-1/3 md:w-1/2 p-5"
               >
-                <div *ngIf="raceCreated" class="toast toast-center toast-top animated fadeOut">
+                <div
+                  *ngIf="raceCreated"
+                  class="toast toast-center toast-top animated fadeOut"
+                >
                   <div class="alert alert-success">
-                    <span>{{ 'race_created_success' | translate }}</span>
+                    <span>{{ "race_created_success" | translate }}</span>
                   </div>
                 </div>
                 <app-race-card
@@ -138,8 +145,8 @@
           </div>
         </div>
       </div>
-      <label class="btn btn-ghost btn-disabled" *ngIf="!noData"
-        >Ir al año</label
+      <label class="btn btn-ghost btn-disabled" *ngIf="!noData">
+        {{ "go_to_year" | translate }}</label
       >
       <!-- Sidebar content here -->
       <div *ngFor="let year of allRacesByYear; let i = index">
@@ -151,7 +158,7 @@
       <li>
         <a (click)="logout()">
           <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
-          Cerrar sesion
+          {{ "sign_out" | translate }}
         </a>
       </li>
     </ul>

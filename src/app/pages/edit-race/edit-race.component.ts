@@ -42,7 +42,7 @@ export class EditRaceComponent implements OnInit {
     surface: [null, Validators.required],
   });
   invalidControls: string[] = [];
-  externalActivity!: boolean;
+  externalActivity = false;
   races: any;
   raceKey: string = this.route.snapshot.paramMap.get('key') || '';
   isLoading: boolean = true;
@@ -84,6 +84,7 @@ export class EditRaceComponent implements OnInit {
     this.raceForm.controls['distanceUnit'].setValue(raceInfo.distanceUnit);
     this.raceForm.controls['date'].setValue(raceInfo.date);
     this.raceForm.controls['time'].setValue(raceInfo.time);
+    this.raceForm.controls['surface'].setValue(raceInfo.surface);
     if (raceInfo.externalActivityUrl) {
       this.externalActivity = true;
       this.raceForm.addControl(
@@ -93,6 +94,7 @@ export class EditRaceComponent implements OnInit {
       this.raceForm.controls['externalActivityUrl'].setValue(
         raceInfo.externalActivityUrl
       );
+      console.log(this.externalActivity);
     }
   }
 

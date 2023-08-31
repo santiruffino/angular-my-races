@@ -4,11 +4,11 @@
       <div class="text-center lg:text-left">
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl santi-glass">
           <div class="card-body">
-            <h1 class="text-5xl font-bold">Crea tu cuenta 😍</h1>
+            <h1 class="text-5xl font-bold">
+              {{ "create_account" | translate }} 😍
+            </h1>
             <p>
-              Todos los runners sabemos lo complicado que es buscar el tiempo de
-              una carrera que hiciste hace mucho tiempo, asi que la idea de esto
-              es que puedas llevar un registro solo de tus carreras 🏅
+              {{ "login_message" | translate }}
             </p>
           </div>
         </div>
@@ -18,7 +18,7 @@
           <form [formGroup]="signUpForm">
             <div class="form-control">
               <label class="label">
-                <span class="label-text">Email</span>
+                <span class="label-text">{{ "email" | translate }}</span>
               </label>
               <input
                 type="text"
@@ -36,7 +36,7 @@
             </div>
             <div class="form-control">
               <label class="label">
-                <span class="label-text">Password</span>
+                <span class="label-text">{{ "password" | translate }}</span>
               </label>
               <div class="join">
                 <input
@@ -60,16 +60,16 @@
             </div>
           </form>
           <small
-            >Ya tienes cuenta?
-            <a class="label-text-alt link link-hover" href="/login"
-              >Click aqui</a
-            ></small
+            >{{ "already_have_account" | translate }}
+            <a class="label-text-alt link link-hover" href="/login">{{
+              "click_here" | translate
+            }}</a></small
           >
           <div class="flex flex-col w-full border-opacity-50">
             <div class="grid h-20 card place-items-center">
               <div class="form-control">
                 <button class="btn btn-primary" (click)="signUp()">
-                  Crear Cuenta
+                  {{ "create_account" | translate }}
                 </button>
               </div>
             </div>
@@ -97,7 +97,7 @@
                         d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
                       ></path>
                     </svg>
-                    Crear cuenta con Google
+                    {{ "sign_up_with_google" | translate }}
                     <div></div>
                   </button>
                 </div>

@@ -27,6 +27,7 @@ export class CrudService {
       distanceValue: race.distanceValue,
       distanceUnit: race.distanceUnit,
       externalActivityUrl: race.externalActivityUrl || '',
+      surface: race.surface,
     });
   }
 
