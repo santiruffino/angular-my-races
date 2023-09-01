@@ -25,7 +25,10 @@
   </div>
 </div>
 
-<div class="card card-compact bg-base-100 shadow-xl">
+<div
+  class="card card-compact bg-base-100 shadow-xl"
+  attr.id="full-card{{ race.$key }}"
+>
   <div class="card-body px-2">
     <h2 class="card-title text-base-content">
       <fa-icon [icon]="race.surfaceIcon"></fa-icon>
@@ -40,13 +43,15 @@
       <div class="stat px-5">
         <div class="stat-title">{{ "distance" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
-          {{ race.distanceValue }}{{ race.distanceUnit }}
+          {{ race.distanceValue }} {{ race.distanceUnit }}
         </div>
       </div>
 
       <div class="stat px-5">
         <div class="stat-title">{{ "time" | translate }}</div>
-        <div class="stat-value text-xl text-info-content">{{ race.time }}</div>
+        <div class="stat-value text-xl text-info-content">
+          {{ race.time }}
+        </div>
       </div>
 
       <div class="stat px-5">
@@ -56,7 +61,10 @@
         </div>
       </div>
     </div>
-    <div class="card-actions justify-end">
+    <div *ngIf="!generatingImage" class="card-actions justify-end">
+      <button class="btn btn-success" (click)="generateImage(race.$key)">
+        <fa-icon [icon]="faImage"></fa-icon>
+      </button>
       <button *ngIf="race.externalActivityUrl" class="btn btn-info">
         <a href="{{ race.externalActivityUrl }}" target="_blank">
           <fa-icon [icon]="faExternalLinkAlt"></fa-icon>

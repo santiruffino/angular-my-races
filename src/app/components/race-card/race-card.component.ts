@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Race } from 'src/app/interfaces/race';
 import {
@@ -15,9 +16,11 @@ import {
   faRoad,
   faTrash,
   faTree,
+  faImage,
 } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Ripple, initTE } from 'tw-elements';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import * as htmlToImage from 'html-to-image';
 
 @Component({
   selector: 'app-race-card',
@@ -36,10 +39,15 @@ export class RaceCardComponent implements OnInit {
   faMountain = faMountain;
   faTree = faTree;
   faPersonRunning = faPersonRunning;
+  faImage = faImage;
 
   raceSelected!: Race;
+  generatingImage = false;
 
-  constructor(private analytics: AngularFireAnalytics) {}
+  constructor(
+    private analytics: AngularFireAnalytics,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     initTE({ Modal, Ripple });
@@ -99,5 +107,29 @@ export class RaceCardComponent implements OnInit {
       newPaceSeconds = paceSeconds.toString();
     }
     this.race.pace = newPaceMinutes.concat(':', newPaceSeconds);
+  }
+
+  filter = (node: HTMLElement) => {
+    const exclusionClasses = ['card-actions', 'secret-div'];
+    return !exclusionClasses.some((classname) =>
+      node.classList?.contains(classname)
+    );
+  };
+
+  generateImage(raceKey: string) {
+    this.generatingImage = true;
+    setTimeout(() => {
+      var node: any = document.getElementById(`full-card${raceKey}`);
+      htmlToImage
+        .toPng(node, { filter: this.filter })
+        .then((dataUrl) => {
+          window.open(dataUrl, '_blank');
+          this.generatingImage = false;
+          this.cd.detectChanges();
+        })
+        .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+        });
+    }, 1000);
   }
 }

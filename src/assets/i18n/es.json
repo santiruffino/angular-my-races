@@ -45,5 +45,6 @@
   "no_races_loaded": "No hay carreras cargadas 🥺",
   "race_created_success": "Carrera creada con exito 💪🏻",
   "race_created_error": "No se pudo crear la carrera 😭",
-  "race_edit_error": "No se pudo editar la carrera 😭"
+  "race_edit_error": "No se pudo editar la carrera 😭",
+  "search_race": "Buscar carrera"
 }
