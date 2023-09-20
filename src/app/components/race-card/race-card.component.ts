@@ -35,14 +35,11 @@ export class RaceCardComponent implements OnInit {
   faExternalLinkAlt = faExternalLinkAlt;
   faPen = faPen;
   faTrash = faTrash;
-  faRoad = faRoad;
-  faMountain = faMountain;
-  faTree = faTree;
-  faPersonRunning = faPersonRunning;
   faImage = faImage;
 
   raceSelected!: Race;
   generatingImage = false;
+  enableGenerateImage: boolean = false;
 
   constructor(
     private analytics: AngularFireAnalytics,

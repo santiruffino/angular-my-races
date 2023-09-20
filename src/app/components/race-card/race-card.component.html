@@ -62,7 +62,7 @@
       </div>
     </div>
     <div *ngIf="!generatingImage" class="card-actions justify-end">
-      <button class="btn btn-success" (click)="generateImage(race.$key)">
+      <button class="btn btn-success" (click)="generateImage(race.$key)" *ngIf="enableGenerateImage">
         <fa-icon [icon]="faImage"></fa-icon>
       </button>
       <button *ngIf="race.externalActivityUrl" class="btn btn-info">
