@@ -38,6 +38,7 @@
   "go_home_page": "Ir al inicio",
   "distance_units": {
     "kilometers": "Kilometros",
+    "km": "Km",
     "kms": "Kms",
     "miles": "Millas",
     "mi": "Mi"

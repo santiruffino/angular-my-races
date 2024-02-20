@@ -1,0 +1,28 @@
+<div class="stats stats-vertical lg:stats-horizontal shadow">
+  <div class="stat">
+    <div class="stat-figure text-primary">
+      <fa-icon [icon]="faLocationPin" size="xl"></fa-icon>
+    </div>
+    <div class="stat-title">Total Races</div>
+    <div class="stat-value text-secondary">{{ races.length }}</div>
+    <!--    <div class="stat-desc">21% more than last month</div>-->
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-primary">
+      <fa-icon [icon]="faFlagCheckered" size="xl"></fa-icon>
+    </div>
+    <div class="stat-title">Total Distance</div>
+    <div class="stat-value text-primary">{{ kilometersCounter | number: '1.0-0' }} Kms</div>
+    <!--    <div class="stat-desc">21% more than last month</div>-->
+  </div>
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <fa-icon [icon]="faClock" size="xl"></fa-icon>
+    </div>
+    <div class="stat-title">Total Time</div>
+    <div class="stat-value text-secondary">{{ totalTime }}</div>
+    <!--    <div class="stat-desc">21% more than last month</div>-->
+  </div>
+</div>

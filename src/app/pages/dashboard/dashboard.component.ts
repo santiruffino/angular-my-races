@@ -85,9 +85,7 @@ export class DashboardComponent implements OnInit {
 
   showCreationToast() {
     this.raceCreated =
-      this.route.snapshot.queryParamMap.get('status') === 'success'
-        ? true
-        : false;
+      this.route.snapshot.queryParamMap.get('status') === 'success';
   }
 
   addRace() {

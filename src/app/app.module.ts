@@ -33,6 +33,10 @@ import { Router } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { AddRaceFormComponent } from './components/add-race-form/add-race-form.component';
+// import { RacesListViewComponent } from './components/races-list-view/races-list-view.component';
+import { MetricsSummaryComponent } from './components/metrics-summary/metrics-summary.component';
+// import { HomeComponent } from './pages/home/home.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -50,6 +54,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditRaceComponent,
     ForgotPasswordSuccessComponent,
     AuthActionsComponent,
+    // AddRaceFormComponent,
+    // RacesListViewComponent,
+    MetricsSummaryComponent,
+    // HomeComponent,
   ],
   imports: [
     BrowserModule,

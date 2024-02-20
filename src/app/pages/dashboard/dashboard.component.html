@@ -1,45 +1,45 @@
 <div class="drawer">
-  <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+  <input class="drawer-toggle" id="my-drawer-3" type="checkbox"/>
   <div class="drawer-content flex flex-col">
     <!-- Navbar -->
     <div class="w-full navbar bg-primary">
       <div class="flex-none lg:hidden">
         <label
-          for="my-drawer-3"
           class="btn btn-square btn-ghost text-primary-content"
+          for="my-drawer-3"
         >
           <fa-icon [icon]="faBars"></fa-icon>
         </label>
       </div>
       <div class="flex-1 px-2 mx-2">
         <a
-          class="btn btn-ghost text-primary-content normal-case text-xl"
           [routerLink]="'/races'"
-          >{{ "my_races" | translate }}</a
+          class="btn btn-ghost text-primary-content normal-case text-xl"
+        >{{ "my_races" | translate }}</a
         >
       </div>
       <div class="flex-none hidden lg:block">
         <ul
           class="menu menu-horizontal dropdown-content p-2 shadow rounded-box text-primary-content z-1"
         >
-          <div class="flex-none gap-2" *ngIf="!noData">
+          <div *ngIf="!noData" class="flex-none gap-2">
             <div class="form-control">
               <div class="join">
                 <input
+                  #filter
                   class="input join-item text-primary"
                   placeholder="{{ 'search_race' | translate }}"
-                  #filter
                 />
                 <button
-                  class="btn join-item"
                   (click)="searchRace(filter.value, false)"
+                  class="btn join-item"
                 >
                   <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
                 </button>
               </div>
             </div>
           </div>
-          <li tabindex="0" *ngIf="!noData">
+          <li *ngIf="!noData" tabindex="0">
             <details class="w-100">
               <summary class="font-bold text-base w-100">
                 {{ "go_to_year" | translate }}
@@ -55,7 +55,8 @@
           </li>
           <li class="text-primary-content self-center">
             <a (click)="logout()"
-              ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
+            >
+              <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
             </a>
           </li>
         </ul>
@@ -69,21 +70,30 @@
         <span class="loading loading-ball loading-lg text-3xl"></span>
       </div>
       <div
-        class="flex justify-center items-center text-center pt-12"
         *ngIf="noData && !loading"
+        class="flex justify-center items-center text-center pt-12"
       >
         <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl santi-glass">
           <div class="card-body">
             <h1 class="text-5xl font-bold pb-5">
               {{ "no_races_loaded" | translate }}
             </h1>
-            <button class="btn btn-primary" (click)="addRace()">
+            <button (click)="addRace()" class="btn btn-primary">
               {{ "actions.create_race" | translate }}
             </button>
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap items-center" *ngIf="!loading">
+      <div *ngIf="!loading" class="flex flex-wrap items-center">
+        <div class="content-center w-full">
+          <div
+            class="flex flex-col w-full border-opacity-50">
+            <div class="divider text-primary-content h-12">
+              <div class="btn btn-secondary">All time data</div>
+            </div>
+            <app-metrics-summary [races]="allRaces" class="m-auto mt-4"></app-metrics-summary>
+          </div>
+        </div>
         <div
           *ngFor="let year of allRacesByYear; let i = index"
           class="content-center w-full"
@@ -95,6 +105,7 @@
             <div class="divider text-primary-content h-12">
               <div class="btn btn-secondary">{{ year.date }}</div>
             </div>
+            <app-metrics-summary [races]="year.races" class="m-auto mt-4"></app-metrics-summary>
             <div class="flex flex-wrap content-center justify-start w-full">
               <div
                 *ngFor="let race of year.races"
@@ -109,43 +120,43 @@
                   </div>
                 </div>
                 <app-race-card
-                  [race]="race"
                   (deleteRaceEvent)="deleteRace($event)"
+                  [race]="race"
                 ></app-race-card>
               </div>
             </div>
           </div>
         </div>
         <label
-          *ngIf="!noData"
           (click)="addRace()"
+          *ngIf="!noData"
           class="btn fixed z-90 bottom-5 right-8 w-20 h-20 drop-shadow-lg flex justify-center items-center text-4xl btn-primary hover:drop-shadow-2xl hover:animate-bounce duration-300"
-          >&#43;</label
+        >&#43;</label
         >
       </div>
     </div>
   </div>
   <div class="drawer-side">
-    <label for="my-drawer-3" class="drawer-overlay"></label>
+    <label class="drawer-overlay" for="my-drawer-3"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200 z-1">
-      <div class="flex-none gap-2" *ngIf="!noData">
+      <div *ngIf="!noData" class="flex-none gap-2">
         <div class="form-control">
           <div class="join">
             <input
+              #filterMobile
               class="input input-bordered join-item text-primary"
               placeholder="{{ 'search_race' | translate }}"
-              #filterMobile
             />
             <button
-              class="btn btn-primary join-item"
               (click)="searchRace(filterMobile.value, true)"
+              class="btn btn-primary join-item"
             >
               <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
             </button>
           </div>
         </div>
       </div>
-      <label class="btn btn-ghost btn-disabled" *ngIf="!noData">
+      <label *ngIf="!noData" class="btn btn-ghost btn-disabled">
         {{ "go_to_year" | translate }}</label
       >
       <!-- Sidebar content here -->

@@ -10,6 +10,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+// import {AddRaceFormComponent} from "./components/add-race-form/add-race-form.component";
+// import {RacesListViewComponent} from "./components/races-list-view/races-list-view.component";
+// import {HomeComponent} from "./pages/home/home.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
@@ -44,6 +47,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { title: 'Mis Carreras' },
   },
+  // {
+  //   path: 'home',
+  //   component: HomeComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { title: 'Home' },
+  // },
+  // {
+  //   path: 'list-races',
+  //   component: RacesListViewComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { title: 'Mis Carreras - List' },
+  // },
   {
     path: 'add-race',
     component: AddRaceComponent,
@@ -59,6 +74,11 @@ const routes: Routes = [
     component: AuthActionsComponent,
     data: { title: 'Auth Exitoso' },
   },
+  // {
+  //   path: 'new-race',
+  //   component: AddRaceFormComponent,
+  //   data: { title: 'New Add Race' },
+  // },
 ];
 
 @NgModule({
