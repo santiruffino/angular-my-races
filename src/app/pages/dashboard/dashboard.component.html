@@ -29,6 +29,7 @@
                   #filter
                   class="input join-item text-primary"
                   placeholder="{{ 'search_race' | translate }}"
+                  (keyup)="inputChanged(filter.value, false)"
                 />
                 <button
                   (click)="searchRace(filter.value, false)"
@@ -85,11 +86,11 @@
         </div>
       </div>
       <div *ngIf="!loading" class="flex flex-wrap items-center">
-        <div class="content-center w-full">
+        <div *ngIf="!isFilteringRace" class="content-center w-full">
           <div
             class="flex flex-col w-full border-opacity-50">
             <div class="divider text-primary-content h-12">
-              <div class="btn btn-secondary">All time data</div>
+              <div class="btn btn-secondary">{{ "all_time_data" | translate }}</div>
             </div>
             <app-metrics-summary [races]="allRaces" class="m-auto mt-4"></app-metrics-summary>
           </div>
@@ -146,6 +147,7 @@
               #filterMobile
               class="input input-bordered join-item text-primary"
               placeholder="{{ 'search_race' | translate }}"
+              (keydown)="inputChanged(filterMobile.value, true)"
             />
             <button
               (click)="searchRace(filterMobile.value, true)"

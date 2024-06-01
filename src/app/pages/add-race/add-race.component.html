@@ -1,20 +1,20 @@
 <div class="drawer">
-  <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+  <input class="drawer-toggle" id="my-drawer-3" type="checkbox"/>
   <div class="drawer-content flex flex-col">
     <div class="w-full navbar bg-primary">
       <div class="flex-none lg:hidden">
         <label
-          for="my-drawer-3"
           class="btn btn-square btn-ghost text-primary-content"
+          for="my-drawer-3"
         >
           <fa-icon [icon]="faBars" class="fa-xl"></fa-icon>
         </label>
       </div>
       <div class="flex-1 px-2 mx-2">
         <a
-          class="btn btn-ghost text-primary-content normal-case text-xl"
           [routerLink]="'/races'"
-          >{{ "my_races" | translate }}</a
+          class="btn btn-ghost text-primary-content normal-case text-xl"
+        >{{ "my_races" | translate }}</a
         >
       </div>
       <div class="flex-none hidden lg:block">
@@ -22,12 +22,13 @@
           <!-- Navbar menu content here -->
           <li>
             <a [routerLink]="'/races'"
-              ><fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>
+            >
+              <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon>
             </a>
           </li>
           <li>
-            <a (click)="authService.signOut()"
-              ><fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
+            <a (click)="authService.signOut()">
+              <fa-icon [icon]="faRightFromBracket" class="fa-xl"></fa-icon>
             </a>
           </li>
         </ul>
@@ -45,9 +46,6 @@
                   <span class="label-text">{{ "race_name" | translate }}</span>
                 </label>
                 <input
-                  required
-                  type="text"
-                  placeholder="Patagonia Run"
                   [ngClass]="
                     (!raceForm.controls['name'].valid &&
                       raceForm.controls['name'].touched) ||
@@ -57,18 +55,17 @@
                       : 'input input-bordered bg-white'
                   "
                   formControlName="name"
+                  placeholder="Patagonia Run"
+                  required
+                  type="text"
                 />
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">{{ "distace" | translate }}</span>
+                  <span class="label-text">{{ "distance" | translate }}</span>
                 </label>
                 <label class="input-group">
                   <input
-                    type="number"
-                    placeholder="42"
-                    min="1"
-                    class="grow"
                     [ngClass]="
                       (!raceForm.controls['distanceValue'].valid &&
                         raceForm.controls['distanceValue'].touched) ||
@@ -77,24 +74,37 @@
                         ? 'input input-bordered bg-white border-red-500'
                         : 'input input-bordered bg-white'
                     "
+                    class="grow"
                     formControlName="distanceValue"
+                    min="1"
+                    placeholder="42"
+                    type="number"
                   />
                   <select
                     class="select select-bordered"
                     formControlName="distanceUnit"
                   >
-                    <option selected>{{ "kms" | translate }}</option>
-                    <option>{{ "mi" | translate }}</option>
+                    <option selected value="km">{{ "distance_units.km" | translate }}</option>
+                    <option value="mi">{{ "distance_units.mi" | translate }}</option>
                   </select>
                 </label>
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">{{ "time" | translate }}</span>
+                  <span class="label-text">{{ "time" | translate }}
+                    <div
+                      class="tooltip tooltip-secondary"
+                      data-tip="Ingresa los numeros siempre con 2 digitos. Ej: 03:02:01"
+                    >
+                        <fa-icon
+                          [icon]="faCircleInfo"
+                          class="fa-sm"
+                        ></fa-icon>
+                    </div>
+                  </span>
                 </label>
                 <input
-                  type="text"
-                  placeholder="hh:mm:ss"
+                  (keydown)="formatRaceTime($event)"
                   [ngClass]="
                     (!raceForm.controls['time'].valid &&
                       raceForm.controls['time'].touched) ||
@@ -104,7 +114,9 @@
                       : 'input input-bordered bg-white'
                   "
                   formControlName="time"
-                  (keyup)="formatRaceTime($event)"
+                  maxlength="8"
+                  placeholder="hh:mm:ss"
+                  type="text"
                   value="{{ formatedTime }}"
                   maxlength="8"
                 />
@@ -114,11 +126,6 @@
                   <span class="label-text">{{ "date" | translate }}</span>
                 </label>
                 <input
-                  type="date"
-                  name="date"
-                  placeholder="dd/mm/aaaa"
-                  class="input input-bordered bg-white"
-                  formControlName="date"
                   [ngClass]="
                     (!raceForm.controls['date'].valid &&
                       raceForm.controls['date'].touched) ||
@@ -127,17 +134,20 @@
                       ? 'input input-bordered bg-white border-red-500 input-date'
                       : 'input input-bordered bg-white input-date'
                   "
+                  class="input input-bordered bg-white"
+                  formControlName="date"
+                  name="date"
+                  placeholder="dd/mm/aaaa"
+                  type="date"
                 />
               </div>
               <div class="form-control w-full">
                 <label class="label">
-                  <span class="label-text text-primary">{{
-                    "surface" | translate
-                  }}</span>
+                  <span class="label-text text-primary">
+                    {{ "surface" | translate }}
+                  </span>
                 </label>
                 <select
-                  class="select select-bordered bg-white"
-                  formControlName="surface"
                   [ngClass]="
                     (!raceForm.controls['surface'].valid &&
                       raceForm.controls['surface'].touched) ||
@@ -146,22 +156,23 @@
                       ? 'input input-bordered bg-white border-red-500'
                       : 'input input-bordered bg-white'
                   "
+                  class="select select-bordered bg-white"
+                  formControlName="surface"
                 >
-                  <option disabled selected [ngValue]="null">
+                  <option [ngValue]="null" disabled selected>
                     {{ "pick_one" | translate }}
                   </option>
                   <option
                     *ngFor="let surface of surfacesValues"
-                    [ngValue]="surface"
-                  >
+                    [ngValue]="surface">
                     {{ surface | titlecase }}
                   </option>
                 </select>
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
-                  <span class="label-text"
-                    >{{ "other_app_activity" | translate }}
+                  <span class="label-text">
+                    {{ "other_app_activity" | translate }}
                     <div
                       class="tooltip tooltip-secondary"
                       data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
@@ -170,15 +181,13 @@
                     </div>
                   </span>
                   <input
-                    type="checkbox"
-                    class="toggle toggle-secondary"
                     (click)="toggleExternalActivityLink($event)"
+                    class="toggle toggle-secondary"
+                    type="checkbox"
                   />
                 </label>
                 <input
                   *ngIf="externalActivity"
-                  type="text"
-                  placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
                   [ngClass]="
                     (!raceForm.controls['externalActivityUrl'].valid &&
                       raceForm.controls['externalActivityUrl'].touched) ||
@@ -188,28 +197,30 @@
                       : 'input input-bordered bg-white'
                   "
                   formControlName="externalActivityUrl"
+                  placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
+                  type="text"
                 />
               </div>
               <div class="form-control mt-6">
                 <button
-                  class="btn btn-primary"
                   (click)="addRace()"
                   *ngIf="!isCreatingRace"
+                  class="btn btn-primary"
                 >
                   {{ "actions.create" | translate }}
                 </button>
-                <button class="btn btn-primary" *ngIf="isCreatingRace">
+                <button *ngIf="isCreatingRace" class="btn btn-primary">
                   <span class="loading loading-spinner"></span>
                   {{ "actions.creating" | translate }}
                 </button>
               </div>
-              <div class="alert alert-error" *ngIf="createRaceError">
+              <div *ngIf="createRaceError" class="alert alert-error">
                 <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
                 <span>{{ "race_created_error" | translate }}</span>
                 <div>
                   <button
-                    class="btn btn-sm btn-ghost"
                     (click)="hideErrorAlert()"
+                    class="btn btn-sm btn-ghost"
                   >
                     X
                   </button>
@@ -224,13 +235,10 @@
                   <div class="form-control">
                     <label class="label">
                       <span class="label-text">{{
-                        "race_name" | translate
-                      }}</span>
+                          "race_name" | translate
+                        }}</span>
                     </label>
                     <input
-                      required
-                      type="text"
-                      placeholder="Patagonia Run"
                       [ngClass]="
                         (!raceForm.controls['name'].valid &&
                           raceForm.controls['name'].touched) ||
@@ -240,6 +248,9 @@
                           : 'input input-bordered bg-white'
                       "
                       formControlName="name"
+                      placeholder="Patagonia Run"
+                      required
+                      type="text"
                     />
                   </div>
                   <div class="form-control">
@@ -247,11 +258,6 @@
                       <span class="label-text">{{ "date" | translate }}</span>
                     </label>
                     <input
-                      type="date"
-                      name="date"
-                      placeholder="dd/mm/aaaa"
-                      class="input input-bordered bg-white"
-                      formControlName="date"
                       [ngClass]="
                         (!raceForm.controls['date'].valid &&
                           raceForm.controls['date'].touched) ||
@@ -260,21 +266,22 @@
                           ? 'input input-bordered bg-white border-red-500 input-date'
                           : 'input input-bordered bg-white input-date'
                       "
+                      class="input input-bordered bg-white"
+                      formControlName="date"
+                      name="date"
+                      placeholder="dd/mm/aaaa"
+                      type="date"
                     />
                   </div>
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">{{
-                        "distance" | translate
-                      }}</span>
+                      <span class="label-text">
+                        {{ "distance" | translate }}
+                      </span>
                     </label>
                     <label class="input-group">
                       <input
-                        type="number"
-                        placeholder="42"
-                        min="1"
-                        class="grow"
                         [ngClass]="
                           (!raceForm.controls['distanceValue'].valid &&
                             raceForm.controls['distanceValue'].touched) ||
@@ -283,16 +290,20 @@
                             ? 'input input-bordered bg-white border-red-500'
                             : 'input input-bordered bg-white'
                         "
+                        class="grow"
                         formControlName="distanceValue"
+                        min="1"
+                        placeholder="42"
+                        type="number"
                       />
                       <select
                         class="select select-bordered"
                         formControlName="distanceUnit"
                       >
-                        <option selected>
-                          {{ "distance_units.kms" | translate }}
+                        <option selected value="km">
+                          {{ "distance_units.km" | translate }}
                         </option>
-                        <option>{{ "distance_units.mi" | translate }}</option>
+                        <option value="mi">{{ "distance_units.mi" | translate }}</option>
                       </select>
                     </label>
                   </div>
@@ -300,11 +311,20 @@
                 <div>
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">{{ "time" | translate }}</span>
+                      <span class="label-text">{{ "time" | translate }}
+                        <div
+                          class="tooltip tooltip-secondary"
+                          data-tip="Ingresa los numeros siempre con 2 digitos. Ej: 03:02:01"
+                        >
+                        <fa-icon
+                          [icon]="faCircleInfo"
+                          class="fa-sm"
+                        ></fa-icon>
+                        </div>
+                      </span>
                     </label>
                     <input
-                      type="text"
-                      placeholder="hh:mm:ss"
+                      (keyup)="formatRaceTime($event)"
                       [ngClass]="
                         (!raceForm.controls['time'].valid &&
                           raceForm.controls['time'].touched) ||
@@ -314,9 +334,8 @@
                           : 'input input-bordered bg-white'
                       "
                       formControlName="time"
-                      (keyup)="formatRaceTime($event)"
-                      value="{{ formatedTime }}"
                       maxlength="8"
+                      type="text"
                     />
                   </div>
                   <div class="form-control w-full">
@@ -326,8 +345,6 @@
                       >
                     </label>
                     <select
-                      class="select select-bordered bg-white"
-                      formControlName="surface"
                       [ngClass]="
                         (!raceForm.controls['surface'].valid &&
                           raceForm.controls['surface'].touched) ||
@@ -336,8 +353,10 @@
                           ? 'input input-bordered bg-white border-red-500'
                           : 'input input-bordered bg-white'
                       "
+                      class="select select-bordered bg-white"
+                      formControlName="surface"
                     >
-                      <option disabled selected [ngValue]="null">
+                      <option [ngValue]="null" disabled selected>
                         {{ "pick_one" | translate }}
                       </option>
                       <option
@@ -352,7 +371,7 @@
                   <div class="form-control">
                     <label class="label cursor-pointer">
                       <span class="label-text"
-                        >{{ "other_app_activity" | translate }}
+                      >{{ "other_app_activity" | translate }}
                         <div
                           class="tooltip tooltip-secondary"
                           data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
@@ -364,15 +383,13 @@
                         </div>
                       </span>
                       <input
-                        type="checkbox"
-                        class="toggle toggle-secondary"
                         (click)="toggleExternalActivityLink($event)"
+                        class="toggle toggle-secondary"
+                        type="checkbox"
                       />
                     </label>
                     <input
                       *ngIf="externalActivity"
-                      type="text"
-                      placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
                       [ngClass]="
                         (!raceForm.controls['externalActivityUrl'].valid &&
                           raceForm.controls['externalActivityUrl'].touched) ||
@@ -382,6 +399,8 @@
                           : 'input input-bordered bg-white'
                       "
                       formControlName="externalActivityUrl"
+                      placeholder="https://connect.garmin.com/modern/activity/xxxxxxxxx"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -389,22 +408,22 @@
             </div>
             <div class="form-control pb-5 px-5">
               <button
-                class="btn btn-primary"
                 (click)="addRace()"
                 *ngIf="!isCreatingRace"
+                class="btn btn-primary"
               >
                 {{ "actions.create" | translate }}
               </button>
-              <button class="btn btn-primary" *ngIf="isCreatingRace">
+              <button *ngIf="isCreatingRace" class="btn btn-primary">
                 <span class="loading loading-spinner"></span>
                 {{ "actions.creating" | translate }}
               </button>
             </div>
-            <div class="alert alert-error" *ngIf="createRaceError">
+            <div *ngIf="createRaceError" class="alert alert-error">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
               <span>{{ "race_created_error" | translate }}</span>
               <div>
-                <button class="btn btn-sm btn-ghost" (click)="hideErrorAlert()">
+                <button (click)="hideErrorAlert()" class="btn btn-sm btn-ghost">
                   X
                 </button>
               </div>
@@ -415,12 +434,13 @@
     </div>
   </div>
   <div class="drawer-side">
-    <label for="my-drawer-3" class="drawer-overlay"></label>
+    <label class="drawer-overlay" for="my-drawer-3"></label>
     <ul class="menu p-4 w-80 h-full bg-base-200">
       <li>
         <a [routerLink]="'/races'">
           <fa-icon [icon]="faHouse" class="fa-xl"></fa-icon
-          >{{ "go_home_page" | translate }}</a
+          >
+          {{ "go_home_page" | translate }}</a
         >
       </li>
       <div class="divider"></div>

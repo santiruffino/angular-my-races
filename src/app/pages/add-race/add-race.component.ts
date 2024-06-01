@@ -26,9 +26,9 @@ import { Datepicker, Input, initTE } from 'tw-elements';
 export class AddRaceComponent implements OnInit {
   public raceForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    distanceValue: [, Validators.required],
-    distanceUnit: ['Km', Validators.required],
-    date: [, Validators.required],
+    distanceValue: [Validators.required],
+    distanceUnit: [Validators.required],
+    date: [Validators.required],
     time: [
       '',
       [
@@ -62,6 +62,7 @@ export class AddRaceComponent implements OnInit {
 
   ngOnInit(): void {
     initTE({ Datepicker, Input });
+    this.raceForm.controls['distanceUnit'].setValue('km');
   }
 
   toggleExternalActivityLink(event: any) {

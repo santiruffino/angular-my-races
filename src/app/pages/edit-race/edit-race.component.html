@@ -362,6 +362,17 @@
                 <span class="loading loading-spinner"></span>
                 {{ "actions.saving" | translate }}
               </button>
+              <button
+                class="btn btn-primary"
+                (click)="saveRaceChanges()"
+                *ngIf="!isCreatingRace"
+              >
+                {{ "actions.save" | translate }}
+              </button>
+              <button class="btn btn-primary" *ngIf="isCreatingRace">
+                <span class="loading loading-spinner"></span>
+                {{ "actions.saving" | translate }}
+              </button>
             </div>
             <div class="alert alert-error" *ngIf="editRaceError">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>

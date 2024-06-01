@@ -9,13 +9,15 @@
     "save": "Guardar",
     "saving": "Guardando"
   },
+  "all_time_data": "Resumen general",
   "errors": {
     "auth/user-not-found": "El usuario ingresado no existe"
   },
   "error": "Error",
   "email": "Email",
   "password": "Contraseña",
-  "forgot_password": "Olvidaste tu contraseña?",
+  "forgot_password_title": "Olvidaste tu contraseña?",
+  "forgot_password_description": "Tranqui, son cosas que pasan. Ingresa tu email asi podemos enviarte un link para recuperarla",
   "hello": "Hola! 👋🏻",
   "login_message": "Todos los runners sabemos lo complicado que es buscar el tiempo de una carrera que hiciste hace mucho tiempo, asi que la idea de esto es que puedas llevar un registro solo de tus carreras 🏅",
   "login_with_google": "Ingresar con Google",
@@ -26,7 +28,9 @@
   "pace": "Ritmo",
   "date": "Fecha",
   "login": "Ingresar",
+  "create_account_label": "¿No tienes cuenta?",
   "create_account": "Crear cuenta",
+  "create_now": "Créala ahora",
   "already_have_account": "Ya tenes cuenta?",
   "click_here": "Click aqui",
   "my_races": "Mis carreras",
@@ -47,5 +51,6 @@
   "race_created_success": "Carrera creada con exito 💪🏻",
   "race_created_error": "No se pudo crear la carrera 😭",
   "race_edit_error": "No se pudo editar la carrera 😭",
+  "recover_password": "Recuperar contraseña",
   "search_race": "Buscar carrera"
 }

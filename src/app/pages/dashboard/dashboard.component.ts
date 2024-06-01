@@ -1,11 +1,3 @@
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  fromEvent,
-  map,
-  switchMap,
-} from 'rxjs';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from 'src/app/interfaces/login';
 import { Race } from 'src/app/interfaces/race';
@@ -18,6 +10,7 @@ import {
   faMagnifyingGlass,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -38,22 +31,18 @@ export class DashboardComponent implements OnInit {
     displayName: '',
     photoURL: '',
   };
-  localstorageJSON = JSON.parse(localStorage.getItem('user') || '{}');
   loading: boolean = true;
   allRacesByYear: any;
-  panelOpenState = false;
-  allComplete: boolean = true;
-  allRacesMock: any;
-  allRacesByYearMock: any;
   creatingNewRace: boolean = false;
   yearsArray: number[] = [];
   faRightFromBracket = faRightFromBracket;
   faBars = faBars;
   faMagnifyingGlass = faMagnifyingGlass;
   filteredRaces!: Race[];
-  searchSubscription: any;
-  searchSubject: any;
   raceCreated = false;
+  isMobile!: boolean;
+  isFilteringRace = false;
+  private modelChanged = new Subject<string>();
 
   constructor(
     public crudApi: CrudService,
@@ -81,6 +70,14 @@ export class DashboardComponent implements OnInit {
       this.generateYearsArray();
       this.loading = false;
     });
+    this.modelChanged.pipe(debounceTime(500)).subscribe((value) => {
+      this.searchRace(value, this.isMobile);
+    });
+  }
+
+  inputChanged(filterValue: string, isMobile: boolean) {
+    this.isMobile = isMobile;
+    this.modelChanged.next(filterValue);
   }
 
   showCreationToast() {
@@ -176,8 +173,10 @@ export class DashboardComponent implements OnInit {
     if (!data) {
       this.analytics.logEvent('Dashboard - Search race empty');
       this.filteredRaces = this.originalAllRaces;
+      this.isFilteringRace = false;
     } else {
       this.analytics.logEvent('Dashboard - Search race with value');
+      this.isFilteringRace = true;
       this.filteredRaces = this.allRaces.filter((race) =>
         race?.name.toLowerCase().includes(data.toLowerCase())
       );
