@@ -68,7 +68,9 @@
                       !loginForm.controls['password'].touched)
                       ? 'border-red-500'
                       : ''
-                  " class="btn join-item">
+                  "
+                        aria-label="Show Password toggle button"
+                        class="btn join-item" id="show-password-button">
                   <fa-icon *ngIf="showPassword" [icon]="faEye"></fa-icon>
                   <fa-icon *ngIf="!showPassword" [icon]="faEyeSlash"></fa-icon>
                 </button>
@@ -120,9 +122,8 @@
           </div>
           <label class="label">
             <span class="label-text">{{ "create_account_label" | translate }}
-              <a class="link-info" href="/sign-up">{{
-                  "create_now" | translate
-                }}</a>
+              <a class="link-info" href="/sign-up">
+                {{ "create_now" | translate }}</a>
             </span>
           </label>
         </div>
