@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -28,9 +28,9 @@ export class EditRaceComponent implements OnInit {
   public raceForm: FormGroup = this.fb.group({
     key: [],
     name: ['', Validators.required],
-    distanceValue: [, Validators.required],
-    distanceUnit: ['Km', Validators.required],
-    date: [, Validators.required],
+    distanceValue: [Validators.required],
+    distanceUnit: [Validators.required],
+    date: [Validators.required],
     time: [
       '',
       [

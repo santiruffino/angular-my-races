@@ -78,10 +78,10 @@
                     class="select select-bordered"
                     formControlName="distanceUnit"
                   >
-                    <option selected>
-                      {{ "distance_units.kms" | translate }}
+                    <option selected value="km">
+                      {{ "distance_units.km" | translate }}
                     </option>
-                    <option>{{ "distance_units.mi" | translate }}</option>
+                    <option value="mi">{{ "distance_units.mi" | translate }}</option>
                   </select>
                 </label>
               </div>
@@ -252,10 +252,10 @@
                         class="select select-bordered"
                         formControlName="distanceUnit"
                       >
-                        <option selected>
-                          {{ "distance_units.kms" | translate }}
+                        <option selected value="km">
+                          {{ "distance_units.km" | translate }}
                         </option>
-                        <option>{{ "distance_units.mi" | translate }}</option>
+                        <option value="mi">{{ "distance_units.mi" | translate }}</option>
                       </select>
                     </label>
                   </div>
@@ -352,17 +352,6 @@
               </div>
             </div>
             <div class="form-control pb-5 px-5">
-              <button
-                (click)="saveRaceChanges()"
-                *ngIf="!isCreatingRace"
-                class="btn btn-primary"
-              >
-                {{ "actions.save" | translate }}
-              </button>
-              <button *ngIf="isCreatingRace" class="btn btn-primary">
-                <span class="loading loading-spinner"></span>
-                {{ "actions.saving" | translate }}
-              </button>
               <button
                 (click)="saveRaceChanges()"
                 *ngIf="!isCreatingRace"

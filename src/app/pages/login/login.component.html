@@ -78,7 +78,7 @@
               <label class="label">
                 <small>
                   <a class="link-info" href="/forgot-password">{{
-                      "forgot_password" | translate
+                      "forgot_password_title" | translate
                     }}</a>
                 </small>
               </label>
@@ -92,9 +92,10 @@
                 </button>
               </div>
             </div>
+            <div class="divider">O</div>
           </div>
-          <div class="form-control">
-            <div class="px-6 sm:px-0 max-w-sm login-google-button">
+          <div class="form-control w-full">
+            <div class="sm:px-0 max-w-sm login-google-button">
               <button
                 (click)="authService.googleAuth()"
                 class="text-white w-full bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2 login-google-button"

@@ -61,13 +61,13 @@
           </form>
           <small
             >{{ "already_have_account" | translate }}
-            <a class="label-text-alt link link-hover" href="/login">{{
-              "click_here" | translate
-            }}</a></small
-          >
+            <a class="label-text-alt link link-hover link-info" href="/login">
+              {{ "click_here" | translate  }}
+            </a>
+          </small>
           <div class="flex flex-col w-full border-opacity-50">
             <div class="grid h-20 card place-items-center">
-              <div class="form-control">
+              <div class="form-control w-full">
                 <button class="btn btn-primary" (click)="signUp()">
                   {{ "create_account" | translate }}
                 </button>
@@ -75,12 +75,12 @@
             </div>
             <div class="divider">O</div>
             <div class="grid h-20 card place-items-center">
-              <div class="form-control">
-                <div class="px-6 sm:px-0 max-w-sm">
+              <div class="form-control w-full">
+                <div class="sm:px-0 max-w-sm login-google-button">
                   <button
                     (click)="authService.googleAuth()"
                     type="button"
-                    class="text-white w-full bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
+                    class="text-white w-full bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2 login-google-button"
                   >
                     <svg
                       class="mr-2 -ml-1 w-4 h-4"
