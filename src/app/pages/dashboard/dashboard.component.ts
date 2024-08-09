@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Login } from 'src/app/interfaces/login';
-import { Race } from 'src/app/interfaces/race';
+import { RaceFirebase } from 'src/app/interfaces/race';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
@@ -19,8 +19,8 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
 export class DashboardComponent implements OnInit {
   @ViewChild('input', { static: true }) input!: ElementRef;
 
-  allRaces: Race[] = [];
-  originalAllRaces: Race[] = [];
+  allRaces: RaceFirebase[] = [];
+  originalAllRaces: RaceFirebase[] = [];
   hideWhenNoRace: boolean = false;
   noData: boolean = true;
   preLoader: boolean = true;
@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
   faRightFromBracket = faRightFromBracket;
   faBars = faBars;
   faMagnifyingGlass = faMagnifyingGlass;
-  filteredRaces!: Race[];
+  filteredRaces!: RaceFirebase[];
   raceCreated = false;
   isMobile!: boolean;
   isFilteringRace = false;
@@ -62,8 +62,8 @@ export class DashboardComponent implements OnInit {
       data.forEach((item) => {
         let a: any = item.payload.toJSON();
         a['$key'] = item.key;
-        this.allRaces.push(a as Race);
-        this.originalAllRaces.push(a as Race);
+        this.allRaces.push(a as RaceFirebase);
+        this.originalAllRaces.push(a as RaceFirebase);
       });
       this.groupRacesByYear();
       this.orderRaces();

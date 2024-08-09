@@ -9,7 +9,8 @@
     "save": "Guardar",
     "saving": "Guardando"
   },
-  "all_time_data": "Resumen general",
+  "back": "Atras",
+  "summary": "Resumen",
   "errors": {
     "auth/user-not-found": "El usuario ingresado no existe"
   },

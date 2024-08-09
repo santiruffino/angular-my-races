@@ -4,7 +4,7 @@ import {
   AngularFireList,
   AngularFireObject,
 } from '@angular/fire/compat/database';
-import { Race } from '../interfaces/race';
+import { RaceForm } from '../interfaces/race';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class CrudService {
 
   constructor(private db: AngularFireDatabase) {}
 
-  addRace(race: Race) {
+  addRace(race: RaceForm) {
     this.racesRef = this.db.list(`${this.userUid}`);
     return this.racesRef.push({
       name: race.name,

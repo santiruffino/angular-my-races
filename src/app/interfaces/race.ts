@@ -1,6 +1,16 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-export interface Race {
+export interface RaceForm {
+  name: string;
+  distanceValue: number;
+  distanceUnit: string;
+  date: Date;
+  time: string;
+  externalActivityUrl?: string;
+  surface: string;
+}
+
+export interface RaceFirebase {
   $key: string;
   name: string;
   distanceValue: number;

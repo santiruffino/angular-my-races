@@ -39,8 +39,21 @@
         <div
           class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 min-w-full"
         >
+          <div
+            *ngIf="raceCreated"
+            class="toast toast-center toast-top animated fadeOut"
+          >
+            <div class="alert alert-success">
+              <span>{{ "race_created_success" | translate }}</span>
+            </div>
+          </div>
           <form [formGroup]="raceForm" class="lg:hidden single-form">
             <div class="card-body">
+              <button [routerLink]="'/races'" class="btn w-1/3">
+                <fa-icon [icon]="faArrowLeft" class="fa-xl"></fa-icon>
+                {{ "back" | translate }}
+              </button>
+              <div class="divider"></div>
               <div class="form-control">
                 <label class="label">
                   <span class="label-text">{{ "race_name" | translate }}</span>
@@ -62,66 +75,6 @@
               </div>
               <div class="form-control">
                 <label class="label">
-                  <span class="label-text">{{ "distance" | translate }}</span>
-                </label>
-                <label class="input-group">
-                  <input
-                    [ngClass]="
-                      (!raceForm.controls['distanceValue'].valid &&
-                        raceForm.controls['distanceValue'].touched) ||
-                      (invalidControls.includes('distanceValue') &&
-                        !raceForm.controls['distanceValue'].touched)
-                        ? 'input input-bordered bg-white border-red-500'
-                        : 'input input-bordered bg-white'
-                    "
-                    class="grow"
-                    formControlName="distanceValue"
-                    min="1"
-                    placeholder="42"
-                    type="number"
-                  />
-                  <select
-                    class="select select-bordered"
-                    formControlName="distanceUnit"
-                  >
-                    <option selected value="km">{{ "distance_units.km" | translate }}</option>
-                    <option value="mi">{{ "distance_units.mi" | translate }}</option>
-                  </select>
-                </label>
-              </div>
-              <div class="form-control">
-                <label class="label">
-                  <span class="label-text">{{ "time" | translate }}
-                    <div
-                      class="tooltip tooltip-secondary"
-                      data-tip="Ingresa los numeros siempre con 2 digitos. Ej: 03:02:01"
-                    >
-                        <fa-icon
-                          [icon]="faCircleInfo"
-                          class="fa-sm"
-                        ></fa-icon>
-                    </div>
-                  </span>
-                </label>
-                <input
-                  (keydown)="formatRaceTime($event)"
-                  [ngClass]="
-                    (!raceForm.controls['time'].valid &&
-                      raceForm.controls['time'].touched) ||
-                    (invalidControls.includes('time') &&
-                      !raceForm.controls['time'].touched)
-                      ? 'input input-bordered bg-white border-red-500'
-                      : 'input input-bordered bg-white'
-                  "
-                  formControlName="time"
-                  maxlength="8"
-                  placeholder="hh:mm:ss"
-                  type="text"
-                  value="{{ formatedTime }}"
-                />
-              </div>
-              <div class="form-control">
-                <label class="label">
                   <span class="label-text">{{ "date" | translate }}</span>
                 </label>
                 <input
@@ -139,6 +92,82 @@
                   placeholder="dd/mm/aaaa"
                   type="date"
                 />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">{{ "distance" | translate }}</span>
+                </label>
+                <div class="join flex">
+                  <input
+                    [ngClass]="
+                      (!raceForm.controls['distanceValue'].valid &&
+                        raceForm.controls['distanceValue'].touched) ||
+                      (invalidControls.includes('distanceValue') &&
+                        !raceForm.controls['distanceValue'].touched)
+                        ? 'input input-bordered bg-white border-red-500'
+                        : 'input input-bordered bg-white'
+                    "
+                    class="join-item w-full"
+                    formControlName="distanceValue"
+                    min="1"
+                    placeholder="42"
+                    type="number"
+                  />
+                  <select
+                    class="select select-bordered bg-white join-item"
+                    formControlName="distanceUnit"
+                  >
+                    <option selected value="km">{{ "distance_units.km" | translate }}</option>
+                    <option value="mi">{{ "distance_units.mi" | translate }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">{{ "time" | translate }}
+                  </span>
+                </label>
+                <div class="join flex">
+                  <input
+                    [ngClass]="
+                        (!raceForm.controls['hoursTime'].valid &&
+                          raceForm.controls['hoursTime'].touched) ||
+                        (invalidControls.includes('hoursTime') &&
+                          !raceForm.controls['hoursTime'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                    class="input input-bordered bg-white join-item w-full"
+                    formControlName="hoursTime"
+                    min="0"
+                    placeholder="hh" type="number"/>
+                  <input
+                    [ngClass]="
+                        (!raceForm.controls['minutesTime'].valid &&
+                          raceForm.controls['minutesTime'].touched) ||
+                        (invalidControls.includes('minutesTime') &&
+                          !raceForm.controls['minutesTime'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                    class="input input-bordered bg-white join-item w-full"
+                    formControlName="minutesTime"
+                    min="0"
+                    placeholder="mm" type="number"/>
+                  <input
+                    [ngClass]="
+                        (!raceForm.controls['secondsTime'].valid &&
+                          raceForm.controls['secondsTime'].touched) ||
+                        (invalidControls.includes('secondsTime') &&
+                          !raceForm.controls['secondsTime'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                    class="input input-bordered bg-white join-item w-full"
+                    formControlName="secondsTime"
+                    min="0"
+                    placeholder="ss" type="number"/>
+                </div>
               </div>
               <div class="form-control w-full">
                 <label class="label">
@@ -229,6 +258,10 @@
           </form>
           <form [formGroup]="raceForm" class="hidden lg:block double-form">
             <div class="card-body">
+              <button [routerLink]="'/races'" class="btn w-1/12">
+                <fa-icon [icon]="faArrowLeft" class="fa-xl"></fa-icon>
+                {{ "back" | translate }}
+              </button>
               <div class="grid grid-cols-2 gap-24 p-5">
                 <div>
                   <div class="form-control">
@@ -279,7 +312,7 @@
                         {{ "distance" | translate }}
                       </span>
                     </label>
-                    <label class="input-group">
+                    <div class="join flex">
                       <input
                         [ngClass]="
                           (!raceForm.controls['distanceValue'].valid &&
@@ -289,14 +322,14 @@
                             ? 'input input-bordered bg-white border-red-500'
                             : 'input input-bordered bg-white'
                         "
-                        class="grow"
+                        class="join-item w-full"
                         formControlName="distanceValue"
                         min="1"
                         placeholder="42"
                         type="number"
                       />
                       <select
-                        class="select select-bordered"
+                        class="select select-bordered bg-white join-item"
                         formControlName="distanceUnit"
                       >
                         <option selected value="km">
@@ -304,40 +337,58 @@
                         </option>
                         <option value="mi">{{ "distance_units.mi" | translate }}</option>
                       </select>
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div>
                   <div class="form-control">
+                  </div>
+                  <div class="form-control">
                     <label class="label">
-                      <span class="label-text">{{ "time" | translate }}
-                        <div
-                          class="tooltip tooltip-secondary"
-                          data-tip="Ingresa los numeros siempre con 2 digitos. Ej: 03:02:01"
-                        >
-                        <fa-icon
-                          [icon]="faCircleInfo"
-                          class="fa-sm"
-                        ></fa-icon>
-                        </div>
+                      <span class="label-text">{{ "time" | translate }} DESKTOP
                       </span>
                     </label>
-                    <input
-                      (keyup)="formatRaceTime($event)"
-                      [ngClass]="
-                        (!raceForm.controls['time'].valid &&
-                          raceForm.controls['time'].touched) ||
-                        (invalidControls.includes('time') &&
-                          !raceForm.controls['time'].touched)
+                    <div class="join flex">
+                      <input
+                        [ngClass]="
+                        (!raceForm.controls['hoursTime'].valid &&
+                          raceForm.controls['hoursTime'].touched) ||
+                        (invalidControls.includes('hoursTime') &&
+                          !raceForm.controls['hoursTime'].touched)
                           ? 'input input-bordered bg-white border-red-500'
                           : 'input input-bordered bg-white'
                       "
-                      formControlName="time"
-                      maxlength="8"
-                      placeholder="hh:mm:ss"
-                      type="text"
-                      value="{{ formatedTime }}"
-                    />
+                        class="input input-bordered bg-white join-item w-full"
+                        formControlName="hoursTime"
+                        min="0"
+                        placeholder="hh" type="number"/>
+                      <input
+                        [ngClass]="
+                        (!raceForm.controls['minutesTime'].valid &&
+                          raceForm.controls['minutesTime'].touched) ||
+                        (invalidControls.includes('minutesTime') &&
+                          !raceForm.controls['minutesTime'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                        class="input input-bordered bg-white join-item w-full"
+                        formControlName="minutesTime"
+                        min="0"
+                        placeholder="mm" type="number"/>
+                      <input
+                        [ngClass]="
+                        (!raceForm.controls['secondsTime'].valid &&
+                          raceForm.controls['secondsTime'].touched) ||
+                        (invalidControls.includes('secondsTime') &&
+                          !raceForm.controls['secondsTime'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                        class="input input-bordered bg-white join-item w-full"
+                        formControlName="secondsTime"
+                        min="0"
+                        placeholder="ss" type="number"/>
+                    </div>
                   </div>
                   <div class="form-control w-full">
                     <label class="label">
@@ -373,15 +424,6 @@
                     <label class="label cursor-pointer">
                       <span class="label-text"
                       >{{ "other_app_activity" | translate }}
-                        <div
-                          class="tooltip tooltip-secondary"
-                          data-tip="Aca podes pegar el link de tu activdad de Garmin/Strava"
-                        >
-                          <fa-icon
-                            [icon]="faCircleInfo"
-                            class="fa-sm"
-                          ></fa-icon>
-                        </div>
                       </span>
                       <input
                         (click)="toggleExternalActivityLink($event)"

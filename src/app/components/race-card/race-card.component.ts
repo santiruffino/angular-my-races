@@ -7,7 +7,7 @@ import {
   EventEmitter,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Race } from 'src/app/interfaces/race';
+import { RaceFirebase } from 'src/app/interfaces/race';
 import {
   faExternalLinkAlt,
   faMountain,
@@ -29,7 +29,7 @@ import * as htmlToImage from 'html-to-image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RaceCardComponent implements OnInit {
-  @Input() race!: Race;
+  @Input() race!: RaceFirebase;
   @Output() deleteRaceEvent = new EventEmitter<string>();
 
   faExternalLinkAlt = faExternalLinkAlt;
@@ -37,7 +37,7 @@ export class RaceCardComponent implements OnInit {
   faTrash = faTrash;
   faImage = faImage;
 
-  raceSelected!: Race;
+  raceSelected!: RaceFirebase;
   generatingImage = false;
   enableGenerateImage: boolean = false;
 
@@ -56,7 +56,7 @@ export class RaceCardComponent implements OnInit {
     this.analytics.logEvent('Race Card - Cancel Delete Race Button Click');
   }
 
-  deleteRaceModal(race: Race) {
+  deleteRaceModal(race: RaceFirebase) {
     this.raceSelected = race;
     this.analytics.logEvent('Race Card - Delete Race Button Click');
   }

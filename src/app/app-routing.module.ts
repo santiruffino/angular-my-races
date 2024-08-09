@@ -74,11 +74,11 @@ const routes: Routes = [
     component: AuthActionsComponent,
     data: { title: 'Auth Exitoso' },
   },
-  // {
-  //   path: 'new-race',
-  //   component: AddRaceFormComponent,
-  //   data: { title: 'New Add Race' },
-  // },
+  {
+    path: '**',
+    redirectTo: '/races',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

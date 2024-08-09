@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
-import { Race } from 'src/app/interfaces/race';
+import { RaceFirebase } from 'src/app/interfaces/race';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import {
   faBars,
@@ -17,6 +17,7 @@ import {
   faCircleInfo,
   faHouse,
   faRightFromBracket,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -31,14 +32,9 @@ export class EditRaceComponent implements OnInit {
     distanceValue: [Validators.required],
     distanceUnit: [Validators.required],
     date: [Validators.required],
-    time: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(8),
-        Validators.pattern('[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?'),
-      ],
-    ],
+    hoursTime: [null, Validators.required],
+    minutesTime: [null, Validators.required],
+    secondsTime: [null, Validators.required],
     surface: [null, Validators.required],
   });
   invalidControls: string[] = [];
@@ -55,6 +51,8 @@ export class EditRaceComponent implements OnInit {
   isCreatingRace: boolean = false;
   editRaceError: boolean = false;
   surfacesValues: string[] = ['calle', 'trail', 'cross', 'otros'];
+  faArrowLeft = faArrowLeft;
+  raceCreated = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,14 +74,17 @@ export class EditRaceComponent implements OnInit {
       });
   }
 
-  fillRaceForm(raceInfo: Race) {
+  fillRaceForm(raceInfo: RaceFirebase) {
     console.log(raceInfo);
+    const timeArray = raceInfo.time.split(':');
     this.raceForm.controls['key'].setValue(this.raceKey);
     this.raceForm.controls['name'].setValue(raceInfo.name);
     this.raceForm.controls['distanceValue'].setValue(raceInfo.distanceValue);
     this.raceForm.controls['distanceUnit'].setValue(raceInfo.distanceUnit);
     this.raceForm.controls['date'].setValue(raceInfo.date);
-    this.raceForm.controls['time'].setValue(raceInfo.time);
+    this.raceForm.controls['hoursTime'].setValue(timeArray[0]);
+    this.raceForm.controls['minutesTime'].setValue(timeArray[1]);
+    this.raceForm.controls['secondsTime'].setValue(timeArray[2]);
     this.raceForm.controls['surface'].setValue(raceInfo.surface);
     if (raceInfo.externalActivityUrl) {
       this.externalActivity = true;
@@ -165,13 +166,21 @@ export class EditRaceComponent implements OnInit {
       this.crudApi
         .updateRace(this.raceKey, newData)
         .then(() => {
+          this.raceCreated = true;
           this.analytics.logEvent('Edit Race - Edit Race Success');
-          this.router.navigate(['races']);
+          this.resetForm();
+          setTimeout(() => {
+            this.router.navigate(['races']);
+          }, 1000);
         })
         .catch((err) => {
           this.analytics.logEvent('Edit Race - Edit Race Error');
           console.error(err);
         });
     }
+  }
+
+  resetForm() {
+    this.raceForm.reset();
   }
 }

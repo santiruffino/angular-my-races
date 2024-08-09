@@ -13,10 +13,12 @@ import {
   faCircleInfo,
   faHouse,
   faRightFromBracket,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { Datepicker, Input, initTE } from 'tw-elements';
+import { RaceForm } from '../../interfaces/race';
 
 @Component({
   selector: 'app-add-race',
@@ -26,17 +28,12 @@ import { Datepicker, Input, initTE } from 'tw-elements';
 export class AddRaceComponent implements OnInit {
   public raceForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    distanceValue: [Validators.required],
-    distanceUnit: [Validators.required],
-    date: [Validators.required],
-    time: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(8),
-        Validators.pattern('[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{1,3})?'),
-      ],
-    ],
+    distanceValue: [null, Validators.required],
+    distanceUnit: ['Km', Validators.required],
+    date: [null, Validators.required],
+    hoursTime: [null, Validators.required],
+    minutesTime: [null, Validators.required],
+    secondsTime: [null, Validators.required],
     surface: [null, Validators.required],
   });
   surfacesValues: string[] = ['calle', 'trail', 'cross', 'otros'];
@@ -51,6 +48,8 @@ export class AddRaceComponent implements OnInit {
   faCircleExclamation = faCircleExclamation;
   faBars = faBars;
   faCircleInfo = faCircleInfo;
+  faArrowLeft = faArrowLeft;
+  raceCreated = false;
 
   constructor(
     public fb: FormBuilder,
@@ -91,7 +90,17 @@ export class AddRaceComponent implements OnInit {
 
   addRace() {
     this.analytics.logEvent('Add Race - Create Race Button Click');
-    console.log(this.raceForm.value);
+    const finalForm: RaceForm = {
+      name: this.raceForm.value.name,
+      distanceValue: this.raceForm.value.distanceValue,
+      distanceUnit: this.raceForm.value.distanceUnit,
+      date: this.raceForm.value.date,
+      time: `${this.raceForm.value.hoursTime}:${this.raceForm.value.minutesTime}:${this.raceForm.value.secondsTime}`,
+      surface: this.raceForm.value.surface,
+      externalActivityUrl: this.raceForm.value.externalActivityUrl
+        ? this.raceForm.value.externalActivityUrl
+        : null,
+    };
     if (!this.raceForm.valid) {
       this.analytics.logEvent('Add Race - Create Race Error - Form Invalid');
       this.invalidControls = this.findInvalidControls();
@@ -101,14 +110,14 @@ export class AddRaceComponent implements OnInit {
       this.isCreatingRace = true;
       this.analytics.logEvent('Add Race- Create Race Start');
       this.crudApi
-        .addRace(this.raceForm.value)
+        .addRace(finalForm)
         .then((result): any => {
+          this.raceCreated = true;
           this.analytics.logEvent('Add Race - Create Race Success');
           this.resetForm();
-          this.router.navigate(['races'], {
-            queryParams: { status: 'success' },
-          });
-          // this.router.navigate(['races']);
+          setTimeout(() => {
+            this.router.navigate(['races']);
+          }, 1000);
         })
         .catch((error: any) => {
           console.error('Error: ', error.message);
@@ -130,20 +139,5 @@ export class AddRaceComponent implements OnInit {
 
   hideErrorAlert() {
     this.createRaceError = false;
-  }
-
-  formatRaceTime(value: any) {
-    const number = value.target.value;
-    var foo = number.split(':').join('');
-    let newNumber = '';
-    for (let i = 0; i < foo.length; i += 2) {
-      if (i + 1 < foo.length - 1) {
-        newNumber += foo.substring(i, i + 2) + ':';
-      } else {
-        newNumber += foo.substring(i);
-      }
-    }
-    console.log(newNumber);
-    this.formatedTime = newNumber;
   }
 }
