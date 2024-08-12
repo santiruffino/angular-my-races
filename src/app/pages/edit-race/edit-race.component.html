@@ -441,16 +441,16 @@
                 *ngIf="!isCreatingRace"
                 class="btn btn-primary"
               >
-                {{ "actions.create" | translate }}
+                {{ "actions.edit" | translate }}
               </button>
               <button *ngIf="isCreatingRace" class="btn btn-primary">
                 <span class="loading loading-spinner"></span>
-                {{ "actions.creating" | translate }}
+                {{ "actions.editing" | translate }}
               </button>
             </div>
             <div *ngIf="editRaceError" class="alert alert-error">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
-              <span>{{ "race_created_error" | translate }}</span>
+              <span>{{ "race_edit_error" | translate }}</span>
               <div>
                 <button (click)="hideErrorAlert()" class="btn btn-sm btn-ghost">
                   X

@@ -11,6 +11,8 @@
   },
   "back": "Atras",
   "summary": "Resumen",
+  "edit": "Editar",
+  "editing": "Editando",
   "errors": {
     "auth/user-not-found": "El usuario ingresado no existe"
   },
