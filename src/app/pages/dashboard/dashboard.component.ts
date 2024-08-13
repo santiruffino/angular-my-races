@@ -188,6 +188,7 @@ export class DashboardComponent implements OnInit {
 
   scrollToYear(id: number, isMobile: boolean) {
     this.analytics.logEvent('Dashboard - Go to year Click');
+    document.getElementById('goToYearDetail')?.removeAttribute('open');
     const el: HTMLElement | null = document.getElementById(id.toString());
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (isMobile) this.hideDrawerMobile();
