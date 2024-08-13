@@ -10,7 +10,7 @@ import {
   faMagnifyingGlass,
   faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { debounceTime, Subject, Subscription } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   templateUrl: './dashboard.component.html',
@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
     try {
       this.crudApi
         .deleteRace(raceKey)
-        .then((result): any => {
+        .then((): any => {
           this.analytics.logEvent('Dashboard - Delete Race Success');
         })
         .catch((error: any) => {
