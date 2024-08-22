@@ -10,14 +10,23 @@ import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-// import {AddRaceFormComponent} from "./components/add-race-form/add-race-form.component";
-// import {RacesListViewComponent} from "./components/races-list-view/races-list-view.component";
-// import {HomeComponent} from "./pages/home/home.component";
+// import { HomeComponent } from './pages/home/home.component';
+// import { NewHomeComponent } from './pages/new-home/new-home.component';
+import { NewLoginComponent } from './pages/new-login/new-login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/races', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: '/races',
+    pathMatch: 'full',
+  },
   {
     path: 'login',
+    component: NewLoginComponent,
+    data: { title: 'New Login' },
+  },
+  {
+    path: 'old-login',
     component: LoginComponent,
     data: { title: 'Iniciar Sesion' },
   },

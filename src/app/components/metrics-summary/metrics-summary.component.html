@@ -1,24 +1,24 @@
 <div class="stats stats-vertical lg:stats-horizontal shadow">
   <div class="stat">
-    <div class="stat-title">Carreras</div>
-    <div class="stat-value text-secondary">
+    <div class="stat-title text-center lg:text-start">Carreras</div>
+    <div class="stat-value text-secondary text-center lg:text-start">
       {{ races.length }}
-      <fa-icon [icon]="faLocationPin" size="2xs"></fa-icon>
+<!--      <fa-icon [icon]="faFlagCheckered" size="2xs"></fa-icon>-->
     </div>
   </div>
 
   <div class="stat">
-    <div class="stat-title">Distancia</div>
-    <div class="stat-value text-primary">{{ kilometersCounter | number: '1.0-0' }} Kms
-      <fa-icon [icon]="faFlagCheckered" size="2xs"></fa-icon>
+    <div class="stat-title text-center lg:text-start">Distancia</div>
+    <div class="stat-value text-primary text-center lg:text-start">{{ kilometersCounter | number: '1.0-0' }} Km
+<!--      <fa-icon [icon]="faFlagCheckered" size="2xs"></fa-icon>-->
     </div>
   </div>
 
   <div class="stat">
-    <div class="stat-title">Tiempo</div>
-    <div class="stat-value text-secondary">
+    <div class="stat-title text-center lg:text-start">Tiempo</div>
+    <div class="stat-value text-secondary text-center lg:text-start">
       {{ totalTime }}
-      <fa-icon [icon]="faClock" size="2xs"></fa-icon>
+<!--      <fa-icon [icon]="faClock" size="2xs"></fa-icon>-->
     </div>
   </div>
 </div>

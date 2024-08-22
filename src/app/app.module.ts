@@ -37,6 +37,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // import { RacesListViewComponent } from './components/races-list-view/races-list-view.component';
 import { MetricsSummaryComponent } from './components/metrics-summary/metrics-summary.component';
 // import { HomeComponent } from './pages/home/home.component';
+// import { NewHomeComponent } from './pages/new-home/new-home.component';
+import { NewLoginComponent } from './pages/new-login/new-login.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
