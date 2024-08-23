@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NewLoginComponent implements OnInit {
   public bgImagesList = ['bg-1.jpg', 'bg-2.jpg'];
-  pepe!: string;
+  backgroundUrlString!: string;
   bgImageSelected!: string;
 
   constructor(public authService: AuthService) {
@@ -20,6 +20,6 @@ export class NewLoginComponent implements OnInit {
   getRandomImage() {
     this.bgImageSelected =
       this.bgImagesList[Math.floor(Math.random() * this.bgImagesList.length)];
-    this.pepe = `url("./assets/images/${this.bgImageSelected}")`;
+    this.backgroundUrlString = `url("./assets/images/${this.bgImageSelected}")`;
   }
 }
