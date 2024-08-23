@@ -60,6 +60,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     // RacesListViewComponent,
     MetricsSummaryComponent,
     // HomeComponent,
+    // NewHomeComponent,
+    NewLoginComponent,
   ],
   imports: [
     BrowserModule,
