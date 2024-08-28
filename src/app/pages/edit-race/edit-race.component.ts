@@ -8,16 +8,16 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
-import { Datepicker, Input, initTE } from 'tw-elements';
+import { Datepicker, initTE, Input } from 'tw-elements';
 import { RaceFirebase } from 'src/app/interfaces/race';
 import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
 import {
+  faArrowLeft,
   faBars,
   faCircleExclamation,
   faCircleInfo,
   faHouse,
   faRightFromBracket,
-  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -75,7 +75,6 @@ export class EditRaceComponent implements OnInit {
   }
 
   fillRaceForm(raceInfo: RaceFirebase) {
-    console.log(raceInfo);
     const timeArray = raceInfo.time.split(':');
     this.raceForm.controls['key'].setValue(this.raceKey);
     this.raceForm.controls['name'].setValue(raceInfo.name);
@@ -86,7 +85,7 @@ export class EditRaceComponent implements OnInit {
     this.raceForm.controls['minutesTime'].setValue(timeArray[1]);
     this.raceForm.controls['secondsTime'].setValue(timeArray[2]);
     this.raceForm.controls['surface'].setValue(raceInfo.surface);
-    if (raceInfo.externalActivityUrl) {
+    if (raceInfo.externalActivityUrl && raceInfo.externalActivityUrl !== '') {
       this.externalActivity = true;
       this.raceForm.addControl(
         'externalActivityUrl',
@@ -95,7 +94,6 @@ export class EditRaceComponent implements OnInit {
       this.raceForm.controls['externalActivityUrl'].setValue(
         raceInfo.externalActivityUrl
       );
-      console.log(this.externalActivity);
     }
   }
 
@@ -134,7 +132,6 @@ export class EditRaceComponent implements OnInit {
         newNumber += foo.substring(i);
       }
     }
-    console.log(newNumber);
     this.formatedTime = newNumber;
   }
 
@@ -143,7 +140,6 @@ export class EditRaceComponent implements OnInit {
   }
 
   saveRaceChanges() {
-    console.log(this.raceForm.value);
     this.analytics.logEvent('Edit Race - Edit Race Button Click');
     if (!this.raceForm.valid) {
       this.analytics.logEvent('Edit Race - Edit Race Error - Form Invalid');

@@ -55,5 +55,6 @@
   "race_created_error": "No se pudo crear la carrera 😭",
   "race_edit_error": "No se pudo editar la carrera 😭",
   "recover_password": "Recuperar contraseña",
-  "search_race": "Buscar carrera"
+  "search_race": "Buscar carrera",
+  "something_wrong": "Algo salio mal 🥺 Intenta nuevamente"
 }

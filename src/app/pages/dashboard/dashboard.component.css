@@ -20,3 +20,7 @@
 .year-selector {
   z-index: 1;
 }
+
+.details-goToYear {
+  height: 100%;
+}

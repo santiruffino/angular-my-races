@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: NewLoginComponent,
-    data: { title: 'New Login' },
+    data: { title: 'Iniciar Sesion' },
   },
   {
     path: 'old-login',

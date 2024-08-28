@@ -95,19 +95,17 @@ export class AuthService {
     });
   }
 
-  authLogin(provider: any) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        localStorage.setItem('user', JSON.stringify(result.user));
-        this.setUserData(result.user);
-        this.ngZone.run(() => {
-          this.router.navigate(['races']);
-        });
-      })
-      .catch((error) => {
-        window.alert(error);
+  async authLogin(provider: any) {
+    try {
+      const result = await this.afAuth.signInWithPopup(provider);
+      localStorage.setItem('user', JSON.stringify(result.user));
+      this.setUserData(result.user);
+      this.ngZone.run(() => {
+        this.router.navigate(['races']);
       });
+    } catch (error) {
+      throw error;
+    }
   }
 
   setUserData(user: any) {
