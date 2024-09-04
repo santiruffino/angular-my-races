@@ -73,6 +73,35 @@
                   type="text"
                 />
               </div>
+              <div class="form-control w-full">
+                <label class="label">
+                      <span class="label-text text-primary">
+                        {{ "surface" | translate }}</span
+                      >
+                </label>
+                <select
+                  [ngClass]="
+                        (!raceForm.controls['surface'].valid &&
+                          raceForm.controls['surface'].touched) ||
+                        (invalidControls.includes('surface') &&
+                          !raceForm.controls['surface'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                  class="select select-bordered bg-white"
+                  formControlName="surface"
+                >
+                  <option [ngValue]="null" disabled selected>
+                    {{ "pick_one" | translate }}
+                  </option>
+                  <option
+                    *ngFor="let surface of surfacesValues"
+                    [ngValue]="surface"
+                  >
+                    {{ surface | titlecase }}
+                  </option>
+                </select>
+              </div>
               <div class="form-control">
                 <label class="label">
                   <span class="label-text">{{ "date" | translate }}</span>
@@ -122,6 +151,31 @@
                   </select>
                 </div>
               </div>
+              <div *ngIf="raceForm.controls['surface'].value === 'trail'" class="form-control">
+                <label class="label">
+                      <span class="label-text">
+                        {{ "elevation" | translate }}
+                      </span>
+                </label>
+                <div class="join flex">
+                  <button class="btn join-item">D+</button>
+                  <input
+                    [ngClass]="
+                          (!raceForm.controls['elevationGain'].valid &&
+                            raceForm.controls['elevationGain'].touched) ||
+                          (invalidControls.includes('elevationGain') &&
+                            !raceForm.controls['elevationGain'].touched)
+                            ? 'input input-bordered bg-white border-red-500'
+                            : 'input input-bordered bg-white'
+                        "
+                    class="join-item w-full"
+                    formControlName="elevationGain"
+                    min="1"
+                    placeholder="1500"
+                    type="number"
+                  />
+                </div>
+              </div>
               <div class="form-control">
                 <label class="label">
                   <span class="label-text">{{ "time" | translate }}
@@ -140,7 +194,8 @@
                     class="input input-bordered bg-white join-item w-full"
                     formControlName="hoursTime"
                     min="0"
-                    placeholder="hh" type="number"/>
+                    placeholder="01" type="number"/>
+                  <button class="btn join-item">:</button>
                   <input
                     [ngClass]="
                         (!raceForm.controls['minutesTime'].valid &&
@@ -153,7 +208,8 @@
                     class="input input-bordered bg-white join-item w-full"
                     formControlName="minutesTime"
                     min="0"
-                    placeholder="mm" type="number"/>
+                    placeholder="30" type="number"/>
+                  <button class="btn join-item">:</button>
                   <input
                     [ngClass]="
                         (!raceForm.controls['secondsTime'].valid &&
@@ -166,36 +222,8 @@
                     class="input input-bordered bg-white join-item w-full"
                     formControlName="secondsTime"
                     min="0"
-                    placeholder="ss" type="number"/>
+                    placeholder="15" type="number"/>
                 </div>
-              </div>
-              <div class="form-control w-full">
-                <label class="label">
-                  <span class="label-text text-primary">
-                    {{ "surface" | translate }}
-                  </span>
-                </label>
-                <select
-                  [ngClass]="
-                    (!raceForm.controls['surface'].valid &&
-                      raceForm.controls['surface'].touched) ||
-                    (invalidControls.includes('surface') &&
-                      !raceForm.controls['surface'].touched)
-                      ? 'input input-bordered bg-white border-red-500'
-                      : 'input input-bordered bg-white'
-                  "
-                  class="select select-bordered bg-white"
-                  formControlName="surface"
-                >
-                  <option [ngValue]="null" disabled selected>
-                    {{ "pick_one" | translate }}
-                  </option>
-                  <option
-                    *ngFor="let surface of surfacesValues"
-                    [ngValue]="surface">
-                    {{ surface | titlecase }}
-                  </option>
-                </select>
               </div>
               <div class="form-control">
                 <label class="label cursor-pointer">
@@ -266,9 +294,8 @@
                 <div>
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text">{{
-                          "race_name" | translate
-                        }}</span>
+                      <span class="label-text">
+                        {{ "race_name" | translate }}</span>
                     </label>
                     <input
                       [ngClass]="
@@ -284,6 +311,35 @@
                       required
                       type="text"
                     />
+                  </div>
+                  <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text text-primary">
+                        {{ "surface" | translate }}
+                      </span>
+                    </label>
+                    <select
+                      [ngClass]="
+                        (!raceForm.controls['surface'].valid &&
+                          raceForm.controls['surface'].touched) ||
+                        (invalidControls.includes('surface') &&
+                          !raceForm.controls['surface'].touched)
+                          ? 'input input-bordered bg-white border-red-500'
+                          : 'input input-bordered bg-white'
+                      "
+                      class="select select-bordered bg-white"
+                      formControlName="surface"
+                    >
+                      <option [ngValue]="null" disabled selected>
+                        {{ "pick_one" | translate }}
+                      </option>
+                      <option
+                        *ngFor="let surface of surfacesValues"
+                        [ngValue]="surface"
+                      >
+                        {{ surface | titlecase }}
+                      </option>
+                    </select>
                   </div>
                   <div class="form-control">
                     <label class="label">
@@ -305,7 +361,8 @@
                       type="date"
                     />
                   </div>
-
+                </div>
+                <div>
                   <div class="form-control">
                     <label class="label">
                       <span class="label-text">
@@ -339,9 +396,30 @@
                       </select>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div class="form-control">
+                  <div *ngIf="raceForm.controls['surface'].value === 'trail'" class="form-control">
+                    <label class="label">
+                      <span class="label-text">
+                        {{ "elevation" | translate }}
+                      </span>
+                    </label>
+                    <div class="join flex">
+                      <button class="btn join-item">D+</button>
+                      <input
+                        [ngClass]="
+                          (!raceForm.controls['elevationGain'].valid &&
+                            raceForm.controls['elevationGain'].touched) ||
+                          (invalidControls.includes('elevationGain') &&
+                            !raceForm.controls['elevationGain'].touched)
+                            ? 'input input-bordered bg-white border-red-500'
+                            : 'input input-bordered bg-white'
+                        "
+                        class="join-item w-full"
+                        formControlName="elevationGain"
+                        min="1"
+                        placeholder="1750"
+                        type="number"
+                      />
+                    </div>
                   </div>
                   <div class="form-control">
                     <label class="label">
@@ -361,7 +439,8 @@
                         class="input input-bordered bg-white join-item w-full"
                         formControlName="hoursTime"
                         min="0"
-                        placeholder="hh" type="number"/>
+                        placeholder="01" type="number"/>
+                      <button class="btn join-item">:</button>
                       <input
                         [ngClass]="
                         (!raceForm.controls['minutesTime'].valid &&
@@ -374,7 +453,8 @@
                         class="input input-bordered bg-white join-item w-full"
                         formControlName="minutesTime"
                         min="0"
-                        placeholder="mm" type="number"/>
+                        placeholder="30" type="number"/>
+                      <button class="btn join-item">:</button>
                       <input
                         [ngClass]="
                         (!raceForm.controls['secondsTime'].valid &&
@@ -387,37 +467,8 @@
                         class="input input-bordered bg-white join-item w-full"
                         formControlName="secondsTime"
                         min="0"
-                        placeholder="ss" type="number"/>
+                        placeholder="15" type="number"/>
                     </div>
-                  </div>
-                  <div class="form-control w-full">
-                    <label class="label">
-                      <span class="label-text text-primary">
-                        {{ "surface" | translate }}</span
-                      >
-                    </label>
-                    <select
-                      [ngClass]="
-                        (!raceForm.controls['surface'].valid &&
-                          raceForm.controls['surface'].touched) ||
-                        (invalidControls.includes('surface') &&
-                          !raceForm.controls['surface'].touched)
-                          ? 'input input-bordered bg-white border-red-500'
-                          : 'input input-bordered bg-white'
-                      "
-                      class="select select-bordered bg-white"
-                      formControlName="surface"
-                    >
-                      <option [ngValue]="null" disabled selected>
-                        {{ "pick_one" | translate }}
-                      </option>
-                      <option
-                        *ngFor="let surface of surfacesValues"
-                        [ngValue]="surface"
-                      >
-                        {{ surface | titlecase }}
-                      </option>
-                    </select>
                   </div>
 
                   <div class="form-control">

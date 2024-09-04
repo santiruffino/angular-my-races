@@ -8,16 +8,16 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  faArrowLeft,
   faBars,
   faCircleExclamation,
   faCircleInfo,
   faHouse,
   faRightFromBracket,
-  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
-import { Datepicker, Input, initTE } from 'tw-elements';
+import { Datepicker, initTE, Input } from 'tw-elements';
 import { RaceForm } from '../../interfaces/race';
 
 @Component({
@@ -30,6 +30,7 @@ export class AddRaceComponent implements OnInit {
     name: ['', Validators.required],
     distanceValue: [null, Validators.required],
     distanceUnit: ['Km', Validators.required],
+    elevationGain: [0],
     date: [null, Validators.required],
     hoursTime: [null, Validators.required],
     minutesTime: [null, Validators.required],
@@ -94,6 +95,7 @@ export class AddRaceComponent implements OnInit {
       name: this.raceForm.value.name,
       distanceValue: this.raceForm.value.distanceValue,
       distanceUnit: this.raceForm.value.distanceUnit,
+      elevationGain: this.raceForm.value.elevationGain,
       date: this.raceForm.value.date,
       time: `${this.raceForm.value.hoursTime}:${this.raceForm.value.minutesTime}:${this.raceForm.value.secondsTime}`,
       surface: this.raceForm.value.surface,

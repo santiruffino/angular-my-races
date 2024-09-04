@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {faClock, faLocationPin, faFlagCheckered} from "@fortawesome/free-solid-svg-icons";
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-metrics-summary',
@@ -9,21 +8,27 @@ import {faClock, faLocationPin, faFlagCheckered} from "@fortawesome/free-solid-s
 export class MetricsSummaryComponent implements OnInit {
   @Input() races: any;
   kilometersCounter = 0;
+  elevationCounter = 0;
   totalTime!: string;
-  faClock = faClock;
-  faLocationPin = faLocationPin;
-  faFlagCheckered = faFlagCheckered;
 
   constructor() {}
 
   ngOnInit(): void {
     this.getTotalKilometers();
+    this.getTotalElevation();
     this.getTotalTime();
   }
 
   getTotalKilometers() {
     this.kilometersCounter = this.races.reduce(
       (partialSum: any, a: any) => partialSum + a.distanceValue,
+      0
+    );
+  }
+
+  getTotalElevation() {
+    this.elevationCounter = this.races.reduce(
+      (partialSum: any, a: any) => partialSum + a.elevationGain,
       0
     );
   }

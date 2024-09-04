@@ -4,6 +4,7 @@ export interface RaceForm {
   name: string;
   distanceValue: number;
   distanceUnit: string;
+  elevationGain: number;
   date: Date;
   time: string;
   externalActivityUrl?: string;
@@ -15,6 +16,7 @@ export interface RaceFirebase {
   name: string;
   distanceValue: number;
   distanceUnit: string;
+  elevationGain: number;
   date: Date;
   time: string;
   type: string;

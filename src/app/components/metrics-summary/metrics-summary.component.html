@@ -3,14 +3,20 @@
     <div class="stat-title text-center lg:text-start">Carreras</div>
     <div class="stat-value text-secondary text-center lg:text-start">
       {{ races.length }}
-<!--      <fa-icon [icon]="faFlagCheckered" size="2xs"></fa-icon>-->
     </div>
   </div>
 
   <div class="stat">
     <div class="stat-title text-center lg:text-start">Distancia</div>
-    <div class="stat-value text-primary text-center lg:text-start">{{ kilometersCounter | number: '1.0-0' }} Km
-<!--      <fa-icon [icon]="faFlagCheckered" size="2xs"></fa-icon>-->
+    <div class="stat-value text-primary text-center lg:text-start">
+      {{ kilometersCounter | number: '1.0-0' }} Km
+    </div>
+  </div>
+
+  <div class="stat" *ngIf="elevationCounter > 0">
+    <div class="stat-title text-center lg:text-start">Desnivel</div>
+    <div class="stat-value text-primary text-center lg:text-start">
+      {{ elevationCounter | number: '1.0-0' }} D+
     </div>
   </div>
 
@@ -18,7 +24,6 @@
     <div class="stat-title text-center lg:text-start">Tiempo</div>
     <div class="stat-value text-secondary text-center lg:text-start">
       {{ totalTime }}
-<!--      <fa-icon [icon]="faClock" size="2xs"></fa-icon>-->
     </div>
   </div>
 </div>

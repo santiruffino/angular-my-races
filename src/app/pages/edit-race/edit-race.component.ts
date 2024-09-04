@@ -31,6 +31,7 @@ export class EditRaceComponent implements OnInit {
     name: ['', Validators.required],
     distanceValue: [Validators.required],
     distanceUnit: [Validators.required],
+    elevationGain: [0],
     date: [Validators.required],
     hoursTime: [null, Validators.required],
     minutesTime: [null, Validators.required],
@@ -80,6 +81,9 @@ export class EditRaceComponent implements OnInit {
     this.raceForm.controls['name'].setValue(raceInfo.name);
     this.raceForm.controls['distanceValue'].setValue(raceInfo.distanceValue);
     this.raceForm.controls['distanceUnit'].setValue(raceInfo.distanceUnit);
+    this.raceForm.controls['elevationGain'].setValue(
+      raceInfo.elevationGain ? raceInfo.elevationGain : 0
+    );
     this.raceForm.controls['date'].setValue(raceInfo.date);
     this.raceForm.controls['hoursTime'].setValue(timeArray[0]);
     this.raceForm.controls['minutesTime'].setValue(timeArray[1]);
@@ -150,11 +154,12 @@ export class EditRaceComponent implements OnInit {
       name: this.raceForm.controls['name'].value,
       distanceValue: this.raceForm.controls['distanceValue'].value,
       distanceUnit: this.raceForm.controls['distanceUnit'].value,
-      time: this.raceForm.controls['time'].value,
+      elevationGain: this.raceForm.controls['elevationGain'].value,
+      time: `${this.raceForm.value.hoursTime}:${this.raceForm.value.minutesTime}:${this.raceForm.value.secondsTime}`,
       date: this.raceForm.controls['date'].value,
       surface: this.raceForm.controls['surface'].value,
       externalActivityUrl:
-        this.raceForm.controls['externalActivityUrl'].value || '',
+        this.raceForm.controls['externalActivityUrl']?.value || '',
     };
 
     if (this.raceKey) {

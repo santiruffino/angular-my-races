@@ -40,21 +40,27 @@
     <div
       class="stats bg-white text-secondary-content stats-vertical lg:stats-horizontal shadow"
     >
-      <div class="stat px-5">
+      <div class="stat px-3">
         <div class="stat-title">{{ "distance" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
           {{ race.distanceValue }} {{ race.distanceUnit }}
         </div>
       </div>
+      <div class="stat px-3" *ngIf="race.elevationGain > 0">
+        <div class="stat-title">{{ "elevation" | translate }}</div>
+        <div class="stat-value text-xl text-info-content">
+          {{race.elevationGain}} D+
+        </div>
+      </div>
 
-      <div class="stat px-5">
+      <div class="stat px-3">
         <div class="stat-title">{{ "time" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
           {{ race.time }}
         </div>
       </div>
 
-      <div class="stat px-5">
+      <div class="stat px-3">
         <div class="stat-title">{{ "pace" | translate }}</div>
         <div class="stat-value text-xl text-info-content">
           {{ race.pace }}/{{ race.distanceUnit }}
