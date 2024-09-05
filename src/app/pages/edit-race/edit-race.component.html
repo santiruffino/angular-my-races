@@ -35,7 +35,13 @@
       </div>
     </div>
     <div class="hero min-h-screen bg-ghost">
-      <div class="hero-content flex-col lg:flex-row-reverse w-full">
+      <div *ngIf="isLoading" class="text-center pt-10">
+        <h1 class="text-5xl font-bold pb-5">Cargando...</h1>
+        <span class="loading loading-ball loading-lg text-3xl"></span>
+        <span class="loading loading-ball loading-lg text-3xl"></span>
+        <span class="loading loading-ball loading-lg text-3xl"></span>
+      </div>
+      <div *ngIf="!isLoading" class="hero-content flex-col lg:flex-row-reverse w-full">
         <div
           class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 min-w-full"
         >
@@ -234,6 +240,7 @@
                     (click)="toggleExternalActivityLink($event)"
                     class="toggle toggle-secondary"
                     type="checkbox"
+                    [checked]="externalActivity"
                   />
                 </label>
                 <input
@@ -262,6 +269,15 @@
                 <button *ngIf="isCreatingRace" class="btn btn-primary">
                   <span class="loading loading-spinner"></span>
                   {{ "actions.creating" | translate }}
+                </button>
+              </div>
+              <div class="form-control mt-1">
+                <button
+                  [routerLink]="'/races'"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-active btn-ghost"
+                >
+                  {{ "actions.cancel" | translate }}
                 </button>
               </div>
               <div *ngIf="editRaceError" class="alert alert-error">
@@ -490,18 +506,29 @@
                 </div>
               </div>
             </div>
-            <div class="form-control pb-5 px-5">
-              <button
-                (click)="saveRaceChanges()"
-                *ngIf="!isCreatingRace"
-                class="btn btn-primary"
-              >
-                {{ "actions.edit" | translate }}
-              </button>
-              <button *ngIf="isCreatingRace" class="btn btn-primary">
-                <span class="loading loading-spinner"></span>
-                {{ "actions.editing" | translate }}
-              </button>
+            <div class="grid grid-cols-2 gap-24 p-5">
+              <div class="form-control pb-5 px-5 w-1/2">
+                <button
+                  [routerLink]="'/races'"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-active btn-ghost"
+                >
+                  {{ "actions.cancel" | translate }}
+                </button>
+              </div>
+              <div class="form-control pb-5">
+                <button
+                  (click)="saveRaceChanges()"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-primary"
+                >
+                  {{ "actions.edit" | translate }}
+                </button>
+                <button *ngIf="isCreatingRace" class="btn btn-primary">
+                  <span class="loading loading-spinner"></span>
+                  {{ "actions.editing" | translate }}
+                </button>
+              </div>
             </div>
             <div *ngIf="editRaceError" class="alert alert-error">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>

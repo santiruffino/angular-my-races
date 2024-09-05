@@ -163,13 +163,14 @@ export class EditRaceComponent implements OnInit {
     };
 
     if (this.raceKey) {
+      this.isCreatingRace = true;
       this.analytics.logEvent('Edit Race - Edit Race Start');
       this.crudApi
         .updateRace(this.raceKey, newData)
         .then(() => {
           this.raceCreated = true;
           this.analytics.logEvent('Edit Race - Edit Race Success');
-          this.resetForm();
+          // this.resetForm();
           setTimeout(() => {
             this.router.navigate(['races']);
           }, 1000);
@@ -177,6 +178,7 @@ export class EditRaceComponent implements OnInit {
         .catch((err) => {
           this.analytics.logEvent('Edit Race - Edit Race Error');
           console.error(err);
+          this.isCreatingRace = false;
         });
     }
   }

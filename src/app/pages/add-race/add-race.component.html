@@ -270,6 +270,15 @@
                   {{ "actions.creating" | translate }}
                 </button>
               </div>
+              <div class="form-control mt-1">
+                <button
+                  [routerLink]="'/races'"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-active btn-ghost"
+                >
+                  {{ "actions.cancel" | translate }}
+                </button>
+              </div>
               <div *ngIf="createRaceError" class="alert alert-error">
                 <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
                 <span>{{ "race_created_error" | translate }}</span>
@@ -500,18 +509,29 @@
                 </div>
               </div>
             </div>
-            <div class="form-control pb-5 px-5">
-              <button
-                (click)="addRace()"
-                *ngIf="!isCreatingRace"
-                class="btn btn-primary"
-              >
-                {{ "actions.create" | translate }}
-              </button>
-              <button *ngIf="isCreatingRace" class="btn btn-primary">
-                <span class="loading loading-spinner"></span>
-                {{ "actions.creating" | translate }}
-              </button>
+            <div class="grid grid-cols-2 gap-24 p-5">
+              <div class="form-control pb-5 px-5 w-1/2">
+                <button
+                  [routerLink]="'/races'"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-active btn-ghost"
+                >
+                  {{ "actions.cancel" | translate }}
+                </button>
+              </div>
+              <div class="form-control pb-5 px-5">
+                <button
+                  (click)="addRace()"
+                  *ngIf="!isCreatingRace"
+                  class="btn btn-primary"
+                >
+                  {{ "actions.create" | translate }}
+                </button>
+                <button *ngIf="isCreatingRace" class="btn btn-primary">
+                  <span class="loading loading-spinner"></span>
+                  {{ "actions.creating" | translate }}
+                </button>
+              </div>
             </div>
             <div *ngIf="createRaceError" class="alert alert-error">
               <fa-icon [icon]="faCircleExclamation" class="fa-xl"></fa-icon>
